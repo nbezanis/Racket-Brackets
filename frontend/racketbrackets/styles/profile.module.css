@@ -1,0 +1,48 @@
+/* Navbar container */
+.navbar {
+    overflow: hidden;
+    background-color: forestgreen;
+    font-family: Arial;
+  }
+  
+  /* Add a red background color to navbar links on hover */
+  .navbar li:hover {
+    background-color: red;
+  }
+
+  .title {
+      padding-top:0px;
+    font-size: 3.5em;
+  }
+
+  .navbar p {
+      margin-top: 0em;
+      margin-bottom: 0em;
+  }
+
+  .navbar ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+  }
+
+  .navbar ul li {
+        font-size: 22px;
+      display:inline-block;
+      padding: 14px 75px;
+      position: relative;
+      /*
+    color: black;
+    text-decoration: none;
+    */
+  }
+
+  .navbar ul li:not(:last-child)::after{
+      content:"";
+      border:1px solid black;
+      border-width: 1px 1px 0 0;
+      position: absolute;
+      right: -3px;
+      top: 0;
+      height: 100%;
+  }
