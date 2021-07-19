@@ -16,7 +16,7 @@ const LogIn = () => {
     const SignIn = async () => {
         try {
             await auth.signInWithEmailAndPassword(emailRef.current!.value,passwordRef.current!.value);
-            router.push('/');
+            router.push('/Profile');
         } catch (e) {
             console.error(e);
         }
@@ -27,8 +27,8 @@ const LogIn = () => {
       <Head>
         <title>Log In</title>
       </Head>
-      <h1>Log In</h1>
-      <form method="post">
+      <h1 id="pageTitle">Log In</h1>
+      <form className="logIn" method="post">
             <input type="text" id="email" name="email" placeholder="Email" ref={emailRef}/><br/>
             <input type="password" id="password" name="password" placeholder="Password" ref={passwordRef}/><br/>
             <button type="button" onClick={SignIn}>Log In</button>

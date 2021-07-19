@@ -42,7 +42,7 @@ const SignUp = () => {
                                     groups: false});
         });
         //Replace this push with a push to the correct profile page
-        router.push("/");
+        router.push("/Profile");
       } catch(e) {
         console.error(e);
       }
@@ -53,8 +53,8 @@ const SignUp = () => {
       <Head>
         <title>Sign Up</title>
       </Head>
-      <h1>Sign Up</h1>
-      <form method="post">
+      <h1 id="pageTitle">Sign Up</h1>
+      <form className="logIn" method="post">
             <input type="text" id="username" name="username" placeholder="Username" ref={usernameRef}/><br/>
             <input type="text" id="email" name="email" placeholder="Email" ref={emailRef}/><br/>
             <input type="password" id="password" name="password" placeholder="Password" ref={passwordRef}/><br/>

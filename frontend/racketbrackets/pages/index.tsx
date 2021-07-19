@@ -1,19 +1,13 @@
-// pages/index.js
-
 import Head from 'next/head';
-import { useContext } from 'react';
-import { AuthContext } from '../auth/AuthContext';
-import { auth } from '../config/firebaseConfig';
 
 const Home = () => {
+  //Should be replaced by Home Page
   return (
     <div>
       <Head>
-        <title>RB Test</title>
+        <title>Home Page</title>
       </Head>
-      <h1>Test</h1>
-      <a href='/SignUp'>Sign Up</a><br/>
-      <a href='/LogIn'>Log In</a><br/>
+      <h1>Home Page</h1>
     </div>
   );
 }

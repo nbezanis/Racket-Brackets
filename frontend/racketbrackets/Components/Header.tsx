@@ -12,7 +12,7 @@ const Header = () => {
         router.push('/');
         };
     
-
+    //May want to replace RacketBrackets Header with Logo?
     return (
         <div className="header">
             <h1>RacketBrackets</h1>
@@ -30,7 +30,7 @@ const Header = () => {
                 {
                     user &&
                     <p>
-                        <a>My Profile</a>
+                        <a href="/Profile">My Profile</a>
                         <a>My Clubs</a>
                         <a>My Matches</a>
                         <a>Search</a>
