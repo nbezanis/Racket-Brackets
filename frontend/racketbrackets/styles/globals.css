@@ -14,3 +14,62 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.navbar{
+  text-align: center;
+  border-top: 3px solid #333;
+  border-bottom: 3px solid #333;
+  background-color: rgb(97, 173, 73);
+  white-space: nowrap;
+  margin-top: 1em;
+  padding: .25em;
+  height: 4em;
+  position: sticky;
+  top:0;
+}
+
+.navbar a{
+  padding-left: 3em;
+  padding-right: 3em;
+}
+
+.userStatus{
+  float: right;
+  padding: 0.1em;
+  display: inline;
+}
+
+.userStatus a{
+  padding: 1em;
+}
+
+.header {
+  padding-top: 5%;
+}
+
+.header h1 {
+  padding: 2em;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  display: inline;
+}
+
+#pageTitle {
+  margin-left: 10%;
+  padding-left: 2em;
+}
+
+.logIn {
+  text-align: center;
+}
+
+.logIn input {
+  padding-top: 0.5em;
+  margin-top: 1em;
+}
+
+.logIn button{
+  margin-top: 2em;
+  background-color:  rgb(156, 211, 139);
+  border-color:  rgb(97, 173, 73);
+}
