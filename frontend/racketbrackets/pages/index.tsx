@@ -8,11 +8,17 @@ const Home = () => {
     <main>
       <div className = {styles.main}>
       <div className = {styles.grid}>
+      <a className = {styles.searchCard}>
+          <form action="/search" method="get">
+            <input type="text" placeholder="Search for Users" id="query" name="query" />
+            <button type="submit">Search</button>
+          </form>
+        </a> 
         <a className = {styles.searchCard}>
-          <h2>Search for Communities</h2>
-        </a>
-        <a className = {styles.searchCard}>
-          <h2>Search for Players</h2>
+          <form action="/search" method="get">
+            <input type="text" placeholder="Search for Communities" id="query" name="query" />
+            <button type="submit">Search</button>
+          </form>
         </a>    
       </div>
      </div>
