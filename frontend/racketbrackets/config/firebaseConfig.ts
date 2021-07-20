@@ -14,9 +14,7 @@ const firebaseConfig = {
 };
 
 try {
-    if(firebase.apps.length){
-        firebase.initializeApp(firebaseConfig);
-    }
+     firebase.initializeApp(firebaseConfig);
 } catch(error) {
     if(!/already exits/.test(error.message)) {
         console.error('Firebase initialization error',error.stack)
