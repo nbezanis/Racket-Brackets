@@ -12,7 +12,7 @@ const Profile = () => {
       <div className={styles.container}>
       <main className={styles.main}>     
  
-        <div className = {styles.imgwithtext}>
+        <div className = {styles.imgWithText}>
             <Image
               priority
               src={profilePic}

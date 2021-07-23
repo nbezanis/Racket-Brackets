@@ -2,7 +2,7 @@
   border-radius: 9999px;
 }
 
-.imgwithtext {
+.imgWithText {
   float:right;
   text-align: center;
   width: 288;
@@ -10,7 +10,20 @@
   margin-top: 1em;
 }
 
-.imgwithtext img {
+.imgWithText img {
   display: block;
   margin: 0 auto;
+}
+
+.profileButton{
+  background-color: #ffffff;
+  border: 2px solid #000000;
+  padding: 8px 16px;
+  text-align: center;
+  display: inline-block;
+  font-size: 16px;
+}
+
+.postButton{
+  margin-left: 40px;
 }
