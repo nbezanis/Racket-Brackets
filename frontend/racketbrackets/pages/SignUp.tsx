@@ -6,6 +6,7 @@ import Head from 'next/head';
 import { AuthContext } from '../auth/AuthContext';
 import { auth } from '../config/firebaseConfig';
 import { useRouter } from 'next/dist/client/router';
+import { User } from '../Classes/User';
 
 
 const SignUp = () => {
@@ -30,16 +31,8 @@ const SignUp = () => {
         await auth.createUserWithEmailAndPassword(emailRef.current!.value,passwordRef.current!.value)
         .then(() => {
           //console.log("user!");
-          const uname = usernameRef.current!.value;
-          var userRef = db.ref('users');
-          userRef.child(uname).set({username: uname, 
-                                    email: emailRef.current!.value,
-                                    location: "",
-                                    rating: 800,
-                                    picture: "",
-                                    previousMatches: false,
-                                    upcomingMatches: false,
-                                    groups: false});
+          const u = new User(usernameRef.current!.value);
+          u.createUser(emailRef.current!.value,db);
         });
         //Replace this push with a push to the correct profile page
         router.push("/Profile");
