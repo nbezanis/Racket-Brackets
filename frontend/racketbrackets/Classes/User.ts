@@ -9,11 +9,41 @@ export class User {
     previous: Array<Match> = [];
     upcoming: Array<Match> = [];
     communities: Array<Community> = [];
-    Rating: number = 800;
+    rating: number = 800;
 
-    constructor(uname: string) {
+    constructor(uname: string, db: any) {
         this.username = uname;
+        var userRef = db.ref('users');
+        userRef.once("value")
+            .then((snapshot: any) => {
+                this.loadValues(snapshot, uname)
+            });
         //Should query database to see if user exists, if they do, populate the rest of the fields
+    }
+
+    loadValues(snapshot: any, uname: string) {
+        if (snapshot.hasChild(uname)) {
+            this.username = uname;
+            this.email = snapshot.child(uname + "/email").val();
+            this.location = snapshot.child(uname + "/location").val();
+            this.picture = snapshot.child(uname + "/picture").val();
+            this.rating = snapshot.child(uname + "/rating").val();
+            if(snapshot.child(uname + "/previous").val() == "false") {
+                this.previous = [];
+            } else {
+                //load in array of Matches
+            }
+            if(snapshot.child(uname + "/upcoming").val() == "false") {
+                this.upcoming = [];
+            } else {
+                //load in array of Matches
+            }
+            if(snapshot.child(uname + "/groups").val() == "false") {
+                this.communities = [];
+            } else {
+                //load in array of Communities
+            }
+        }
     }
 
     createUser(uEmail: string, db: any) {
@@ -31,6 +61,23 @@ export class User {
         });
         this.email = uEmail;
     }
+
+    getEmail(): string {
+        return this.email;
+    }
+
+    getUsername():string {
+        return this.username;
+    }
+
+    getRating():number {
+        return this.rating;
+    }
+
+    getPicture():string {
+        return this.picture;
+    }
+
 
     //Probably want getters for private fields
 
