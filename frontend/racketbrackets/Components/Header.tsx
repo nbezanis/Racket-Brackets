@@ -42,7 +42,9 @@ const Header = () => {
                         <Link href="Profile">
                           <a>My Profile</a>
                         </Link>
+                        <Link href="GroupProfile">
                         <a>My Clubs</a>
+                        </Link>
                         <a>My Matches</a>
                       <Link href="/">
                         <a>Search</a>

@@ -9,8 +9,8 @@ const Home = () => {
       <div className = {styles.main}>
       <div className = {styles.grid}>
       <a className = {styles.searchCard}>
-          <form action="/search" method="get">
-            <input type="text" placeholder="Search for Users" id="query" name="query" />
+          <form action="/Profile" method="get">
+            <input type="text" placeholder="Search for Users" id="name" name="name" />
             <button type="submit">Search</button>
           </form>
         </a> 
