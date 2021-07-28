@@ -31,7 +31,7 @@ const Header = () => {
                     user &&
                     <p>
                         <a href="/Profile">My Profile</a>
-                        <a>My Clubs</a>
+                        <a href="GroupProfile">My Clubs</a>
                         <a>My Matches</a>
                         <a href="/">Search</a>
                     </p>
