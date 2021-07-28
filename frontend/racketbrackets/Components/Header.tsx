@@ -43,7 +43,9 @@ const Header = () => {
                         <Link href={`Profile/?name=${User.TEMP_NAME}`}>
                           <a>My Profile</a>
                         </Link>
+                        <Link href="GroupProfile">
                         <a>My Clubs</a>
+                        </Link>
                         <a>My Matches</a>
                       <Link href="/">
                         <a>Search</a>
