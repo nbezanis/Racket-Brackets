@@ -5,29 +5,33 @@ import profilePic from './images/default.png'
 import styles from '../styles/profile.module.css'
 import { User } from '../Classes/User'
 import firebase from 'firebase'
+import Router from 'next/router'
+import { useRouter } from 'next/router'
  
 const Profile = () => {
 
+  const router = useRouter();
+  const params = new URLSearchParams(router.query as unknown as string);
+  const name = params.get("name");
   const db = firebase.database();
   //need to replace hardcoded username with a URL param
-  const u = new User("jbsandling", db);
-  const name = u.getUsername();
+  const u = new User(String(name), db);
+  const uname = u.getUsername();
   const rating = u.getRating();
   const picture = u.getPicture();
-
   return (
     <div className={styles.container}>
     <main className={styles.main}>     
 
       <div className = {styles.imgWithText}>
-      {/*    <Image*/}
-      {/*      priority*/}
-      {/*      src={profilePic}*/}
-      {/*      className={styles.borderCircle}*/}
-      {/*      height={288}*/}
-      {/*      width={288}*/}
-      {/*      alt={name}*/}
-      {/*    />*/}
+          <Image
+            priority
+            src={profilePic}
+            className={styles.borderCircle}
+            height={288}
+            width={288}
+            alt={uname}
+          />
           <p>Username: {name}</p>
           <p>Rating: {rating}</p>
       </div>
