@@ -20,14 +20,14 @@ const Profile = () => {
     <main className={styles.main}>     
 
       <div className = {styles.imgWithText}>
-          <Image
-            priority
-            src={profilePic}
-            className={styles.borderCircle}
-            height={288}
-            width={288}
-            alt={name}
-          />
+      {/*    <Image*/}
+      {/*      priority*/}
+      {/*      src={profilePic}*/}
+      {/*      className={styles.borderCircle}*/}
+      {/*      height={288}*/}
+      {/*      width={288}*/}
+      {/*      alt={name}*/}
+      {/*    />*/}
           <p>Username: {name}</p>
           <p>Rating: {rating}</p>
       </div>
