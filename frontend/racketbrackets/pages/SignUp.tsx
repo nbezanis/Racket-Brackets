@@ -31,11 +31,11 @@ const SignUp = () => {
         await auth.createUserWithEmailAndPassword(emailRef.current!.value,passwordRef.current!.value)
         .then(() => {
           //console.log("user!");
-          const u = new User(usernameRef.current!.value);
+          const u = new User(usernameRef.current!.value, db);
           u.createUser(emailRef.current!.value,db);
+          User.TEMP_NAME = u.getUsername()
+            router.push(`/Profile/?name=${u.getUsername()}`);
         });
-        //Replace this push with a push to the correct profile page
-        router.push("/Profile");
       } catch(e) {
         console.error(e);
       }

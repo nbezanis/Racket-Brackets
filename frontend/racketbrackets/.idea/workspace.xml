@@ -2,10 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c6231fa9-4d46-4897-bec7-3919a8b8465e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/components/title/title.module.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/title/title.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/landingPage/landingPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/landingPage/LandingPage.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classes/User.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Classes/User.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Components/Header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Components/Header.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/LogIn.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/LogIn.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/Profile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/Profile.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/SignUp.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/SignUp.tsx" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -80,6 +82,7 @@
       <updated>1626542568769</updated>
       <workItem from="1626542573302" duration="4138000" />
       <workItem from="1626546761408" duration="5236000" />
+      <workItem from="1627431118538" duration="699000" />
     </task>
     <servers />
   </component>
