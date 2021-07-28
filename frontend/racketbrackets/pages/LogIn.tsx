@@ -13,10 +13,15 @@ const LogIn = () => {
     const emailRef = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null);
 
+    const cleanEmail = (email: String | null | undefined) => {
+        if(email == null) return "user"
+        return email.split("@")[0]
+    }
+
     const SignIn = async () => {
         try {
-            await auth.signInWithEmailAndPassword(emailRef.current!.value,passwordRef.current!.value);
-            router.push('/Profile');
+            const credentials = await auth.signInWithEmailAndPassword(emailRef.current!.value,passwordRef.current!.value);
+            router.push(`/Profile/?name=${cleanEmail(credentials.user?.email)}`);
         } catch (e) {
             console.error(e);
         }
