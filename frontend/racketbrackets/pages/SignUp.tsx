@@ -33,6 +33,7 @@ const SignUp = () => {
           //console.log("user!");
           const u = new User(usernameRef.current!.value, db);
           u.createUser(emailRef.current!.value,db);
+          User.TEMP_NAME = u.getUsername()
             router.push(`/Profile/?name=${u.getUsername()}`);
         });
       } catch(e) {

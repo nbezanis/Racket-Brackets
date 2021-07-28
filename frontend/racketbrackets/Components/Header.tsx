@@ -3,6 +3,7 @@ import React, { Component, useContext } from "react";
 import { AuthContext } from "../auth/AuthContext";
 import { auth } from "../config/firebaseConfig";
 import Link from 'next/link'
+import { User } from '../Classes/User';
 
 const Header = () => {    
     const user = useContext(AuthContext);
@@ -39,7 +40,7 @@ const Header = () => {
                 {
                     user &&
                     <p>
-                        <Link href="Profile">
+                        <Link href={`Profile/?name=${User.TEMP_NAME}`}>
                           <a>My Profile</a>
                         </Link>
                         <a>My Clubs</a>

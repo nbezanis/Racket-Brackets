@@ -4,6 +4,7 @@ import Head from 'next/head';
 import { AuthContext } from '../auth/AuthContext';
 import { auth } from '../config/firebaseConfig';
 import { useRouter } from 'next/dist/client/router';
+import {User} from "../Classes/User";
 
 const LogIn = () => {
     const user = useContext(AuthContext);
@@ -21,6 +22,7 @@ const LogIn = () => {
     const SignIn = async () => {
         try {
             const credentials = await auth.signInWithEmailAndPassword(emailRef.current!.value,passwordRef.current!.value);
+            User.TEMP_NAME = cleanEmail(credentials.user?.email)
             router.push(`/Profile/?name=${cleanEmail(credentials.user?.email)}`);
         } catch (e) {
             console.error(e);

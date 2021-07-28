@@ -3,7 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="c6231fa9-4d46-4897-bec7-3919a8b8465e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classes/User.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Classes/User.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Components/Header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Components/Header.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/LogIn.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/LogIn.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/Profile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/Profile.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/SignUp.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/SignUp.tsx" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />

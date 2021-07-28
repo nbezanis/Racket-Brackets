@@ -10,6 +10,7 @@ export class User {
     upcoming: Array<Match> = [];
     communities: Array<Community> = [];
     rating: number = 800;
+    static TEMP_NAME: String = ""
 
     constructor(uname: string, db: any) {
         this.username = uname;
