@@ -3,12 +3,24 @@ import Image from 'next/image'
 import Link from 'next/link'
 import profilePic from './images/default.png'
 import styles from '../styles/profile.module.css'
+import { AuthContext } from '../auth/AuthContext';
+import { auth } from '../config/firebaseConfig';
+import { useRouter } from 'next/dist/client/router';
+import { User } from '../Classes/User';
+import React, { useContext, useRef } from 'react';
+import firebase from 'firebase';
+import Router from 'next/router'
  
-const name = 'Temp'
+var name = 'Temp'
 const rating = '1400'
- 
+
 const Profile = () => {
+  const router = useRouter()
+  const params = new URLSearchParams(router.query as unknown as string);
+  const name = params.get("name");
+
     return (
+
       <div className={styles.container}>
       <main className={styles.main}>     
  
@@ -19,7 +31,7 @@ const Profile = () => {
               className={styles.borderCircle}
               height={288}
               width={288}
-              alt={name}
+              //alt={name}
             />
             <p>Username: {name}</p>
             <p>Rating: {rating}</p>
