@@ -32,17 +32,17 @@ export class User {
             if(snapshot.child(uname + "/previous").val() == "false") {
                 this.previous = [];
             } else {
-                //load in array of Matches
+                this.previous = JSON.parse(snapshot.child(uname + "/previous").val());
             }
             if(snapshot.child(uname + "/upcoming").val() == "false") {
                 this.upcoming = [];
             } else {
-                //load in array of Matches
+                this.previous = JSON.parse(snapshot.child(uname + "/upcoming").val());
             }
             if(snapshot.child(uname + "/groups").val() == "false") {
                 this.communities = [];
             } else {
-                //load in array of Communities
+                this.previous = JSON.parse(snapshot.child(uname + "/communities").val());
             }
         }
     }
@@ -79,8 +79,9 @@ export class User {
         return this.picture;
     }
 
-
-    //Probably want getters for private fields
+    getLocation(): string {
+        return this.location;
+    }
 
     updateLocation(loc: string, db: any) {
         this.location = loc;

@@ -14,7 +14,6 @@ const Profile = () => {
   const params = new URLSearchParams(router.query as unknown as string);
   const name = params.get("name");
   const db = firebase.database();
-  //need to replace hardcoded username with a URL param
   const u = new User(String(name), db);
   const uname = u.getUsername();
   const rating = u.getRating();

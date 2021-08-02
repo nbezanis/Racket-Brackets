@@ -12,6 +12,7 @@ const Header = () => {
     const SignOut = async () => {
         await auth.signOut();
         router.push('/');
+        localStorage.removeItem("username");
         };
 
     {/*<Link href="/posts/first-post">*/}
@@ -40,7 +41,7 @@ const Header = () => {
                 {
                     user &&
                     <p>
-                        <Link href={`Profile/?name=${User.TEMP_NAME}`}>
+                        <Link href={`Profile/?name=${localStorage.getItem("username")}`}>
                           <a>My Profile</a>
                         </Link>
                         <Link href="GroupProfile">
