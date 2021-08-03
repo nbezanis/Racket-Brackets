@@ -1,5 +1,3 @@
-// pages/SignIn.tsx
-
 import React, { useContext, useRef } from 'react';
 import firebase from 'firebase';
 import Head from 'next/head';
@@ -41,6 +39,7 @@ const SignUp = () => {
           const u = new User(usernameRef.current!.value, db);
           u.createUser(emailRef.current!.value,db);
           User.TEMP_NAME = u.getUsername()
+          localStorage.setItem("username",u.getUsername());
             router.push(`/Profile/?name=${u.getUsername()}`);
         });
       } catch(e) {

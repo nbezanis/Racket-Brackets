@@ -1,5 +1,6 @@
 import { Match } from "./Match";
 import { Community } from "./Community";
+import firebase from "firebase";
 
 export class User {
     username: string;
@@ -11,38 +12,54 @@ export class User {
     communities: Array<Community> = [];
     rating: number = 800;
     static TEMP_NAME: String = ""
+    exists: boolean = false;
 
     constructor(uname: string, db: any) {
         this.username = uname;
         var userRef = db.ref('users');
         userRef.once("value")
             .then((snapshot: any) => {
-                this.loadValues(snapshot, uname)
+                this.loadValues(snapshot, uname, db)
             });
         //Should query database to see if user exists, if they do, populate the rest of the fields
     }
 
-    loadValues(snapshot: any, uname: string) {
+    loadValues(snapshot: any, uname: string, db:any) {
         if (snapshot.hasChild(uname)) {
+            this.exists = true;
             this.username = uname;
             this.email = snapshot.child(uname + "/email").val();
             this.location = snapshot.child(uname + "/location").val();
             this.picture = snapshot.child(uname + "/picture").val();
             this.rating = snapshot.child(uname + "/rating").val();
-            if(snapshot.child(uname + "/previous").val() == "false") {
+            if(snapshot.child(uname + "/previous").val() == null) {
                 this.previous = [];
             } else {
-                //load in array of Matches
+                const previous:Array<number> = JSON.parse(snapshot.child(uname + "/previous").val());
+                previous.forEach((prev) => {
+                    const m:Match = new Match(prev,db);
+                    this.previous.push(m);
+                });
             }
-            if(snapshot.child(uname + "/upcoming").val() == "false") {
+            if(snapshot.child(uname + "/upcoming").val() == null) {
                 this.upcoming = [];
             } else {
-                //load in array of Matches
+                const upcoming:Array<number> = JSON.parse(snapshot.child(uname + "/upcoming").val());
+                upcoming.forEach((upc) => {
+                    const m:Match = new Match(upc,db);
+                    this.upcoming.push(m);
+                });
             }
-            if(snapshot.child(uname + "/groups").val() == "false") {
+            console.log(snapshot.child(uname + "/groups").exists());
+            console.log(snapshot.child(uname + "/groups").val());
+            if(snapshot.child(uname + "/groups").val() == null) {
                 this.communities = [];
             } else {
-                //load in array of Communities
+                const comms:Array<string> = JSON.parse(snapshot.child(uname + "/groups").val());
+                comms.forEach((comm) => {
+                    const c:Community = new Community(comm,db);
+                    this.communities.push(c);
+                });
             }
         }
     }
@@ -63,6 +80,10 @@ export class User {
         this.email = uEmail;
     }
 
+    userExists(): boolean {
+        return this.exists;
+    }
+
     getEmail(): string {
         return this.email;
     }
@@ -79,8 +100,15 @@ export class User {
         return this.picture;
     }
 
+    getLocation(): string {
+        return this.location;
+    }
 
-    //Probably want getters for private fields
+    getCommunities(): Array<Community> {
+        return this.communities;
+    }
+
+
 
     updateLocation(loc: string, db: any) {
         this.location = loc;
@@ -135,7 +163,11 @@ export class User {
     addCommunity(community: Community) {
         //called in Community.acceptUser()
         //Todo: ensure community not already in communities
-        this.communities.push(community);
+        if(this.communities.includes(community)) {
+            console.log("Error: already in the community");
+        } else {
+            this.communities.push(community);
+        }
         //Todo: push the updated list to the database
     }
 

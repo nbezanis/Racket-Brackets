@@ -14,7 +14,7 @@ export class Match {
     location: string = "";
     score: Array<number> = [];
 
-    constructor(id: number){
+    constructor(id: number, db: any){
         //Should query database for id, and fill in fields if match exists
         //Maybe use 0 to indicate new match?
     }

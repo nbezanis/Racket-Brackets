@@ -24,6 +24,7 @@ const Profile = () => {
   const uname = u.getUsername();
   const rating = u.getRating();
   const picture = u.getPicture();
+  
   return (
     <div className={styles.container}>
     <main className={styles.main}>     

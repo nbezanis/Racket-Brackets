@@ -16,15 +16,40 @@ export class Community{
     rating: number = 800;
     //Todo: Implement DiscussionBoard
     //board: DiscussionBoard
+    //Todo: Add upcoming events, maybe just an array of Event items?
 
-    constructor(cname: string) {
+    constructor(cname: string, db: any) {
         this.name = cname;
-        //Should query database to see if group exists, and if so, populate other fields
+        var commRef = db.ref('communities');
+        commRef.once("value")
+            .then((snapshot: any) => {
+                this.loadValues(snapshot, cname);
+            });
+    }
+
+    loadValues(snapshot: any, cname: string) {
+        if(snapshot.hasChild(cname)) {
+            this.name = cname;
+            this.picture = snapshot.child(cname + "/picture").val();
+            this.location = snapshot.child(cname + "/location").val();
+            this.rating = snapshot.child(cname + "/rating").val();
+            if(snapshot.child(cname + "/users").val() == "false") {
+                this.users = [];
+            } else {
+                this.users = JSON.parse(snapshot.child(cname + "/users").val());
+            }
+            if(snapshot.child(cname + "/admins").val() == "false") {
+                this.admins = [];
+            } else {
+                this.admins = JSON.parse(snapshot.child(cname + "/admins").val());
+            }
+            //Add a DiscussionBoard when its implemented
+        }
     }
 
     createCommunity(creator: User, db: any) {
         this.admins.push(creator);
-        this.updateRating();
+        this.updateRating(db);
         var commRef = db.ref('communities');
         commRef.child(this.name).set({
             name: this.name,
@@ -36,12 +61,36 @@ export class Community{
         });
     }
 
+    getCommunityName(): string {
+        return this.name;
+    }
+
+    getRating(): number {
+        return this.rating;
+    }
+
+    getLocation(): string {
+        return this.location;
+    }
+
+    getPicture(): string {
+        return this.picture;
+    }
+
+    inGroup(user: User, db: any) : boolean {
+        return this.users.includes(user) || this.admins.includes(user);
+    }
+
     updatePicture(pic: string) {
 
     }
 
-    updateLocation(loc: string) {
-
+    updateLocation(loc: string, db: any) {
+        this.location = loc;
+        var commRef = db.ref('communities');
+        commRef.child(this.name).set({
+            location: loc
+        });
     }
 
     inviteUser(newUser: User) {
@@ -52,9 +101,23 @@ export class Community{
 
     }
 
-    updateRating() {
+    updateRating(db: any) {
         //Called by User.updateRating()
-
+        var sum: number = 0;
+        var count: number = 0;
+        this.users.forEach((item) => {
+            count++;
+            sum += item.getRating();
+        });
+        this.admins.forEach((item) =>{
+            count++;
+            sum += item.getRating();
+        });
+        this.rating = sum / count;
+        var commRef = db.ref('communities');
+        commRef.child(this.name).set({
+            rating: this.rating
+        });
     }
 
     acceptUser(newUser: User) {
@@ -66,7 +129,7 @@ export class Community{
 
     }
 
-    addAdmin(newAdmin: User) {
+    addAdmin(newAdmin: User, db: any) {
 
     }
 
