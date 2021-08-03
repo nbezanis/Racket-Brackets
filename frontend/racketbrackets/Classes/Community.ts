@@ -71,5 +71,16 @@ export class Community{
     leaveGroup(targetUser: User) {
         //calls User.removeCommunity(this)
     }
+    
+    getName():string {
+        return this.name;
+    }
 
+    getRating():number {
+        return this.rating;
+    }
+
+    getPicture():string {
+        return this.picture;
+    }
 }

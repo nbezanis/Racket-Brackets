@@ -13,14 +13,14 @@ const GroupProfile = () => {
             <main className={styles.main}>
 
                 <div className = {styles.imgWithText}>
-                    {/*<Image*/}
-                    {/*  priority*/}
-                    {/*  src={profilePic}*/}
-                    {/*  className={styles.borderCircle}*/}
-                    {/*  height={288}*/}
-                    {/*  width={288}*/}
-                    {/*  alt={name}*/}
-                    {/*/>*/}
+                    <Image
+                        priority
+                        src={profilePic}
+                        className={styles.borderCircle}
+                        height={288}
+                        width={288}
+                        alt={name}
+                        />
                     <p>Group name: {name}</p>
                     <p>Average rating: {rating}</p>
                     <button className={styles.profileButton}>See group ranking</button>
