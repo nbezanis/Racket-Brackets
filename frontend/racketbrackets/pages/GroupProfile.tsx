@@ -7,6 +7,10 @@ import { Community } from '../Classes/Community';
 import Router from 'next/router'
 import { useRouter } from 'next/router'
 
+/*
+*Each group profile page contains the community's name, average rating, and picture.
+*Todo: Should also include a discussion board
+*/
 const GroupProfile = () => {
 
     const router = useRouter();
@@ -29,7 +33,7 @@ const GroupProfile = () => {
                         className={styles.borderCircle}
                         height={288}
                         width={288}
-                        alt={name}
+                        alt={cname}
                         />
                     <p>Group name: {name}</p>
                     <p>Average rating: {rating}</p>
