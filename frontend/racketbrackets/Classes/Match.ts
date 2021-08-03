@@ -1,5 +1,12 @@
 import { User } from "./User";
 
+
+/*
+*The Match class represents a match between two users. It includes an int that represents a
+*unique id number, an array that will hold the two players that are participating, a 
+*date on which the match is played, a location which is a string representing the location
+*of the match, and finally a score array that holds the final score of the match. 
+*/
 export class Match {
     id: number = 0;
     players: Array<User> = [];

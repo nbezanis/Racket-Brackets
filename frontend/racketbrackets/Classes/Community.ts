@@ -1,5 +1,12 @@
 import { User } from "./User";
 
+
+/*
+*This class represents a community of Users. Its main data structure is an array of users that are 
+*in the group. It also has an additional array that represents admins in the group. Other elements
+*include name, picture, and location, which are all represented as strings. Finally, there is a rating
+*element that is an integer represeting the average rating of all memebers of a group.
+*/
 export class Community{
     name: string;
     picture: string = "";

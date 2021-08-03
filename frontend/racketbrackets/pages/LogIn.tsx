@@ -6,6 +6,10 @@ import { auth } from '../config/firebaseConfig';
 import { useRouter } from 'next/dist/client/router';
 import {User} from "../Classes/User";
 
+/*
+*This is the login page. It takes user input, verifies that a user with those credentials 
+*exists in the database, and signs them in if so.
+*/
 const LogIn = () => {
     const user = useContext(AuthContext);
 
@@ -14,11 +18,13 @@ const LogIn = () => {
     const emailRef = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null);
 
+    //Helper function to help with redirecting to the profile page
     const cleanEmail = (email: String | null | undefined) => {
         if(email == null) return "user"
         return email.split("@")[0]
     }
 
+    //Main sign in function
     const SignIn = async () => {
         try {
             const credentials = await auth.signInWithEmailAndPassword(emailRef.current!.value,passwordRef.current!.value);
