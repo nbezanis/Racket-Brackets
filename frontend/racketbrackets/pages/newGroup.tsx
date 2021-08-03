@@ -4,7 +4,10 @@ import firebase from 'firebase';
 import { useRef } from 'react';
 import { User } from '../Classes/User';
 import router from 'next/router';
-
+/*
+*This page takes input from the user including group name and location, and 
+*creates a new group based on those things. 
+*/
 const newGroup = () => {
 
     const groupNameRef = useRef<HTMLInputElement>(null);
