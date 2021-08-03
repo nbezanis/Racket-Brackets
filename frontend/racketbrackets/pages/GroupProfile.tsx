@@ -1,12 +1,20 @@
-import React, { useContext, useRef } from 'react';
+import React, { useContext, useRef, useRouter } from 'react';
 import styles from "../styles/profile.module.css";
 import Image from 'next/image'
 import profilePic from './images/default.png'
+import firebase from 'firebase'
+import { Community } from '../Classes/Community';
 
 const GroupProfile = () => {
 
-    const name = 'Temp'
-    const rating = '1400'
+    const router = useRouter();
+    const params = new URLSearchParams(router.query as unknown as string);
+    const name = params.get("name");
+    const db = firebase.database();
+    const c = new Community(String(name), db);
+    const cname = c.getCommunityName();
+    const rating = c.getRating();
+    const picture = c.getPicture();
 
     return (
         <div className={styles.container}>
