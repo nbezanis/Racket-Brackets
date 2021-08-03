@@ -1,0 +1,11 @@
+.groupList li {
+    text-align: center;
+    padding: 1em;
+    width: 75%;
+    outline: black;
+    outline-style: solid;
+    background-color: rgb(190, 190, 190);
+    list-style-type:none;
+    margin: auto;
+    margin-top: 0.5em;
+}

@@ -23,6 +23,7 @@ const LogIn = () => {
         try {
             const credentials = await auth.signInWithEmailAndPassword(emailRef.current!.value,passwordRef.current!.value);
             User.TEMP_NAME = cleanEmail(credentials.user?.email)
+            localStorage.setItem("username",cleanEmail(credentials.user?.email));
             router.push(`/Profile/?name=${cleanEmail(credentials.user?.email)}`);
         } catch (e) {
             console.error(e);
