@@ -1,9 +1,11 @@
-import React, { useContext, useRef, useRouter } from 'react';
+import React, { useContext, useRef } from 'react';
 import styles from "../styles/profile.module.css";
 import Image from 'next/image'
 import profilePic from './images/default.png'
 import firebase from 'firebase'
 import { Community } from '../Classes/Community';
+import Router from 'next/router'
+import { useRouter } from 'next/router'
 
 const GroupProfile = () => {
 

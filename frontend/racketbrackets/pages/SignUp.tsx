@@ -1,5 +1,3 @@
-// pages/SignIn.tsx
-
 import React, { useContext, useRef } from 'react';
 import firebase from 'firebase';
 import Head from 'next/head';
