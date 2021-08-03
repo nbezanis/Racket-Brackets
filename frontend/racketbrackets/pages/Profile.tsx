@@ -8,8 +8,14 @@ import firebase from 'firebase'
 import Router from 'next/router'
 import { useRouter } from 'next/router'
  
+/*
+*The profile page for a user, contains an image, username, rating,
+*match history, and active communities. Obtained using methods from
+*the User class
+*/
 const Profile = () => {
 
+  //Get the username from a URL param
   const router = useRouter();
   const params = new URLSearchParams(router.query as unknown as string);
   const name = params.get("name");
@@ -22,16 +28,15 @@ const Profile = () => {
   return (
     <div className={styles.container}>
     <main className={styles.main}>     
-
       <div className = {styles.imgWithText}>
-          {/*<Image*/}
-          {/*  priority*/}
-          {/*  src={profilePic}*/}
-          {/*  className={styles.borderCircle}*/}
-          {/*  height={288}*/}
-          {/*  width={288}*/}
-          {/*  alt={uname}*/}
-          {/*/>*/}
+          <Image
+            priority
+            src={profilePic}
+            className={styles.borderCircle}
+            height={288}
+            width={288}
+            alt={uname}
+          />
           <p>Username: {name}</p>
           <p>Rating: {rating}</p>
       </div>

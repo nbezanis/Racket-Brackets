@@ -7,6 +7,10 @@ import { useRouter } from 'next/dist/client/router';
 import { User } from '../Classes/User';
 
 
+/*
+*This is the sign up page. It takes input from the user and calls the CreateUser fuction, which 
+*adds the user to the database.
+*/
 const SignUp = () => {
     const user = useContext(AuthContext);
 
@@ -24,11 +28,14 @@ const SignUp = () => {
       //  Make sure passwords are long enough?
     }
 
+    /*
+    *The CreateUser function  creates a new user using the email and password they submit, and then redirects to the
+    *new User's profile page. 
+    */
     const CreateUser = async () => {
       try{
         await auth.createUserWithEmailAndPassword(emailRef.current!.value,passwordRef.current!.value)
         .then(() => {
-          //console.log("user!");
           const u = new User(usernameRef.current!.value, db);
           u.createUser(emailRef.current!.value,db);
           User.TEMP_NAME = u.getUsername()
