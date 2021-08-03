@@ -2,12 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c6231fa9-4d46-4897-bec7-3919a8b8465e" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/pages/JoinGroup.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classes/User.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Classes/User.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Components/Header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Components/Header.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/LogIn.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/LogIn.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/Profile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/Profile.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/SignUp.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/SignUp.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/GroupList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/GroupList.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/api/hello.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pages/api/hello.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/newGroup.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/newGroup.tsx" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

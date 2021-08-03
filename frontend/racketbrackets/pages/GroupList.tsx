@@ -85,7 +85,7 @@ const GroupList = () => {
             </Head>
             <ul className={styles.groupList}>
                 <MyGroups/>
-                <a /*link to group search*/ ><li>Join a Group</li></a>
+                <a href="/JoinGroup" ><li>Join a Group</li></a>
                 <a href="/newGroup"><li>Create New Group</li></a>
             </ul>
         </div>
