@@ -34,10 +34,12 @@ class MyGroups extends Component<MGProps>{
         var userRef = db.ref('users').once("value")
             .then(snapshot => {
                 const comms:Array<string> = JSON.parse(snapshot.child(this.props.username + "/groups").val());
-                comms.forEach((comm) => {
-                    const c:Community = new Community(comm,db);
-                    this.state.groups.push(c);
-                });
+                if(comms != null && comms != false) {
+                    comms.forEach((comm) => {
+                        const c:Community = new Community(comm,db);
+                        this.state.groups.push(c);
+                    });
+                }
                 this.setState({loading: false});
             })
         }
