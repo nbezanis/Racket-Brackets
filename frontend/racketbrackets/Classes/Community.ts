@@ -7,6 +7,7 @@ export class Community{
     users: Array<User> = [];
     admins: Array<User> = [];
     rating: number = 800;
+    pendingRequests = [];
     //Todo: Implement DiscussionBoard
     //board: DiscussionBoard
     //Todo: Add upcoming events, maybe just an array of Event items?
@@ -50,7 +51,8 @@ export class Community{
             location: this.location,
             users: JSON.stringify(this.users),
             admins: JSON.stringify(this.admins),
-            rating: this.rating
+            rating: this.rating,
+            pendingUsers: "[]"
         });
     }
 
