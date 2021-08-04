@@ -6,6 +6,7 @@ import firebase from 'firebase'
 import { Community } from '../Classes/Community';
 import Router from 'next/router'
 import { useRouter } from 'next/router'
+import {DiscussionBoard} from '../Classes/DiscussionBoard';
 
 const GroupProfile = () => {
 
@@ -18,6 +19,7 @@ const GroupProfile = () => {
     const rating = c.getRating();
     const picture = c.getPicture();
     const location = c.getLocation();
+    const board = c.getBoard();
 
     return (
         <div className={styles.container}>

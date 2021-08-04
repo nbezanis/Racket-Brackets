@@ -18,6 +18,7 @@ export class User {
 
     constructor(uname: string, db: any) {
         this.username = uname;
+        this.board = new DiscussionBoard();
         var loaded: boolean = false;
         var userRef = db.ref('users');
         userRef.once("value")
@@ -114,8 +115,10 @@ export class User {
         return this.communities;
     }
 
-
-
+    getBoard(): DiscussionBoard{
+        return this.board;
+    }
+    
     updateLocation(loc: string, db: any) {
         this.location = loc;
         var userRef = db.ref('users');

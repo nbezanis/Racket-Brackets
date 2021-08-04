@@ -10,11 +10,12 @@ export class Community{
     rating: number = 800;
     pendingRequests = [];
     //Todo: Implement DiscussionBoard
-    board: DiscussionBoard = new DiscussionBoard;
+    board: DiscussionBoard;
     //Todo: Add upcoming events, maybe just an array of Event items?
 
     constructor(cname: string, db: any) {
         this.name = cname;
+        this.board = new DiscussionBoard();
         var commRef = db.ref('communities');
         commRef.once("value")
             .then((snapshot: any) => {
@@ -72,6 +73,10 @@ export class Community{
 
     getPicture(): string {
         return this.picture;
+    }
+
+    getBoard(): DiscussionBoard{
+        return this.board;
     }
 
     inGroup(user: User, db: any) : boolean {
