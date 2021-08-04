@@ -16,15 +16,19 @@ export class User {
 
     constructor(uname: string, db: any) {
         this.username = uname;
+        var loaded: boolean = false;
         var userRef = db.ref('users');
         userRef.once("value")
             .then((snapshot: any) => {
-                this.loadValues(snapshot, uname, db)
-            });
+                loaded = this.loadValues(snapshot, uname, db)
+            }).then(
+                console.log("done")
+            );
         //Should query database to see if user exists, if they do, populate the rest of the fields
     }
 
-    loadValues(snapshot: any, uname: string, db:any) {
+    loadValues(snapshot: any, uname: string, db:any): boolean {
+        var loaded: boolean = false;
         if (snapshot.hasChild(uname)) {
             this.exists = true;
             this.username = uname;
@@ -53,15 +57,21 @@ export class User {
             console.log(snapshot.child(uname + "/groups").exists());
             console.log(snapshot.child(uname + "/groups").val());
             if(snapshot.child(uname + "/groups").val() == null) {
+                console.log("empty c");
                 this.communities = [];
             } else {
                 const comms:Array<string> = JSON.parse(snapshot.child(uname + "/groups").val());
+                console.log("comms " + comms);
                 comms.forEach((comm) => {
                     const c:Community = new Community(comm,db);
                     this.communities.push(c);
                 });
+                console.log("yes? "+this.communities[0].getCommunityName());
+                loaded = true;
             }
+        } else {
         }
+        return loaded;
     }
 
     createUser(uEmail: string, db: any) {

@@ -44,7 +44,7 @@ const Header = () => {
                         <Link href={`Profile/?name=${localStorage.getItem("username")}`}>
                           <a>My Profile</a>
                         </Link>
-                        <Link href="GroupList">
+                        <Link href={`GroupList/?name=${localStorage.getItem("username")}`}>
                         <a>My Clubs</a>
                         </Link>
                         <a>My Matches</a>
