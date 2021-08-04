@@ -6,6 +6,7 @@ import firebase from 'firebase'
 import { Community } from '../Classes/Community';
 import Router from 'next/router'
 import { useRouter } from 'next/router'
+import {DiscussionBoard} from '../Classes/DiscussionBoard';
 
 const GroupProfile = () => {
 
@@ -18,10 +19,25 @@ const GroupProfile = () => {
     const rating = c.getRating();
     const picture = c.getPicture();
     const location = c.getLocation();
+    const board = c.getBoard();
+    const postNameRef = useRef<HTMLInputElement>(null);
+    const postBodyRef = useRef<HTMLInputElement>(null);
+
+
+    //calls board.MakePost, which creates and adds a post to the board.
+    const createPost = () => {
+        var name: string = " ";
+        const tempname = localStorage.getItem("username");
+        if(tempname) {
+            name = tempname;
+        }
+        board.makePost(name, postNameRef.current!.value, postBodyRef.current!.value);
+    }
 
     const playerList = () => {
         router.push(`/PlayerList/?name=${cname}`);
     }
+
 
     return (
         <div className={styles.container}>
@@ -46,7 +62,11 @@ const GroupProfile = () => {
                 <ul>
                     <li><u>Profile 1:</u> This is a comment</li>
                 </ul>
-                <button className={`${styles.postButton} ${styles.profileButton}`}>Post to Group</button>
+                <form method="post">
+                <input type="text" name="title" placeholder = "Post title" ref={postNameRef}/>
+                <input type="text" name="body" placeholder = "Post body" ref={postBodyRef}/>
+                <button type="button" onClick={createPost}>Create Post</button>
+                 </form>
                 <h2>Upcoming Events</h2>
                 <ul>
                     <li><u>Tennis tournament, Wednesday, July 17th</u></li>

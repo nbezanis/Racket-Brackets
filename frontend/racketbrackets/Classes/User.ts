@@ -1,6 +1,7 @@
 import { Match } from "./Match";
 import { Community } from "./Community";
 import firebase from "firebase";
+import { DiscussionBoard } from "./DiscussionBoard";
 
 export class User {
     username: string;
@@ -11,11 +12,13 @@ export class User {
     upcoming: Array<Match> = [];
     communities: Array<String> = [];
     rating: number = 800;
+    board: DiscussionBoard;
     static TEMP_NAME: String = ""
     exists: boolean = false;
 
     constructor(uname: string, db: any) {
         this.username = uname;
+        this.board = new DiscussionBoard();
         var loaded: boolean = false;
         var userRef = db.ref('users');
         userRef.once("value")
@@ -112,8 +115,10 @@ export class User {
         return this.communities;
     }
 
-
-
+    getBoard(): DiscussionBoard{
+        return this.board;
+    }
+    
     updateLocation(loc: string, db: any) {
         this.location = loc;
         var userRef = db.ref('users');
@@ -137,6 +142,7 @@ export class User {
         //Todo: ensure match is not already in upcoming, maybe see if any other matches at same time
         this.upcoming.push(match);
         //Todo: push the updated list to the database
+        var userRef = db.ref('users')
     }
 
     removeUpcomingMatch(match: Match) {
