@@ -2,8 +2,11 @@ import Head from 'next/head';
 import styles from '../styles/Home.module.css'
 import * as React from "react";
 
+/*
+*The home page has two main features, both being search bars. One allows users to search for
+*communities while the other allows users to search for other users.
+*/
 const Home = () => {
-  //Should be replaced by Home Page
   return (
     <main>
       <div className = {styles.main}>
@@ -15,8 +18,8 @@ const Home = () => {
           </form>
         </a> 
         <a className = {styles.searchCard}>
-          <form action="/search" method="get">
-            <input type="text" placeholder="Search for Communities" id="query" name="query" />
+          <form action="/GroupProfile" method="get">
+            <input type="text" placeholder="Search for Communities" id="name" name="name" />
             <button type="submit">Search</button>
           </form>
         </a>    

@@ -17,6 +17,7 @@ const GroupProfile = () => {
     const cname = c.getCommunityName();
     const rating = c.getRating();
     const picture = c.getPicture();
+    const location = c.getLocation();
 
     return (
         <div className={styles.container}>
@@ -33,6 +34,7 @@ const GroupProfile = () => {
                     {/*/>*/}
                     <p>Group name: {name}</p>
                     <p>Average rating: {rating}</p>
+                    <p>Location: {location}</p>
                     <button className={styles.profileButton}>See group ranking</button>
                 </div>
 

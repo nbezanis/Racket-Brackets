@@ -43,6 +43,7 @@ export class Community{
 
     createCommunity(creator: User, db: any) {
         this.admins.push(creator);
+        creator.addCommunity(this,db);
         this.updateRating(db);
         var commRef = db.ref('communities');
         commRef.child(this.name).set({

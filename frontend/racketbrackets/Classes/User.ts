@@ -9,22 +9,26 @@ export class User {
     picture: string = "";
     previous: Array<Match> = [];
     upcoming: Array<Match> = [];
-    communities: Array<Community> = [];
+    communities: Array<String> = [];
     rating: number = 800;
     static TEMP_NAME: String = ""
     exists: boolean = false;
 
     constructor(uname: string, db: any) {
         this.username = uname;
+        var loaded: boolean = false;
         var userRef = db.ref('users');
         userRef.once("value")
             .then((snapshot: any) => {
-                this.loadValues(snapshot, uname, db)
-            });
+                loaded = this.loadValues(snapshot, uname, db)
+            }).then(
+                console.log("done")
+            );
         //Should query database to see if user exists, if they do, populate the rest of the fields
     }
 
-    loadValues(snapshot: any, uname: string, db:any) {
+    loadValues(snapshot: any, uname: string, db:any): boolean {
+        var loaded: boolean = false;
         if (snapshot.hasChild(uname)) {
             this.exists = true;
             this.username = uname;
@@ -50,18 +54,18 @@ export class User {
                     this.upcoming.push(m);
                 });
             }
-            console.log(snapshot.child(uname + "/groups").exists());
-            console.log(snapshot.child(uname + "/groups").val());
             if(snapshot.child(uname + "/groups").val() == null) {
                 this.communities = [];
             } else {
                 const comms:Array<string> = JSON.parse(snapshot.child(uname + "/groups").val());
-                comms.forEach((comm) => {
-                    const c:Community = new Community(comm,db);
-                    this.communities.push(c);
-                });
+                if(comms != null && comms != false) {
+                    this.communities = comms;
+                }
+                loaded = true;
             }
+        } else {
         }
+        return loaded;
     }
 
     createUser(uEmail: string, db: any) {
@@ -104,7 +108,7 @@ export class User {
         return this.location;
     }
 
-    getCommunities(): Array<Community> {
+    getCommunities(): Array<String> {
         return this.communities;
     }
 
@@ -160,21 +164,22 @@ export class User {
 
     }
 
-    addCommunity(community: Community) {
+    addCommunity(community: Community, db: any) {
         //called in Community.acceptUser()
         //Todo: ensure community not already in communities
-        if(this.communities.includes(community)) {
+        if(this.communities.includes(community.getCommunityName())) {
             console.log("Error: already in the community");
         } else {
-            this.communities.push(community);
+            this.communities.push(community.getCommunityName());
+            var userRef = db.ref('users');
+            userRef.child(this.username).update({groups: JSON.stringify(this.communities)});
         }
-        //Todo: push the updated list to the database
     }
 
     removeCommunity(community: Community) {
         //called in Community.removeUser() or Community.leaveGroup()
         //Todo: ensure user is already in community
-        const index = this.communities.indexOf(community,0);
+        const index = this.communities.indexOf(community.getCommunityName(),0);
         if (index > -1) {
             this.communities.slice(index,1);
         }

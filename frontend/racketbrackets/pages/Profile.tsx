@@ -18,22 +18,24 @@ const Profile = () => {
   const uname = u.getUsername();
   const rating = u.getRating();
   const picture = u.getPicture();
-  
+  const location = u.getLocation();
+
   return (
     <div className={styles.container}>
     <main className={styles.main}>     
 
-      <div className = {styles.imgWithText}>
-          {/*<Image*/}
-          {/*  priority*/}
-          {/*  src={profilePic}*/}
-          {/*  className={styles.borderCircle}*/}
-          {/*  height={288}*/}
-          {/*  width={288}*/}
-          {/*  alt={uname}*/}
-          {/*/>*/}
+    <div className = {styles.imgWithText}>
+          <Image
+            priority
+            src={profilePic}
+            className={styles.borderCircle}
+            height={288}
+            width={288}
+            alt={uname}
+          />
           <p>Username: {name}</p>
           <p>Rating: {rating}</p>
+          <p>Location: {location}</p>
       </div>
 
       <h2>Match History</h2>
