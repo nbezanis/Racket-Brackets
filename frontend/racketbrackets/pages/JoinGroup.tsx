@@ -53,8 +53,18 @@ export default class JoinGroup extends Component {
         const db = firebase.database();
         const ref = db.ref(`communities/${this.groupName}`);
         const name = localStorage.getItem("username");
-        this.pendingUsers.push(name || "");
-        ref.update({"pendingUsers": this.pendingUsers})
+        if(this.pendingUsers.includes(name || "")) {
+            console.log("ALREADY REQUESTED TO JOIN GROUP");
+            //say you already requested to join this group
+        }
+        /*else if (is an admin or user) {
+            //say already a user of this group, dont need to request
+        }*/
+        else {
+            this.pendingUsers.push(name || "");
+            ref.update({"pendingUsers": this.pendingUsers})
+        }
+        console.log(this.pendingUsers)
     };
 
     render() {
