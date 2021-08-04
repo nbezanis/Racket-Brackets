@@ -135,29 +135,50 @@ export class User {
     addUpcomingMatch(match: Match, db: any) {
         //called in Match.AcceptMatch()
         //Todo: ensure match is not already in upcoming, maybe see if any other matches at same time
-        this.upcoming.push(match);
+        if(this.upcoming.includes(match)) {
+            console.error("Match already added")
+        } else {
+            this.upcoming.push(match);
+            var userRef = db.ref('users');
+            userRef.child(this.username).update({
+                upcoming: JSON.stringify(this.upcoming);
+            })
+        }
         //Todo: push the updated list to the database
     }
 
-    removeUpcomingMatch(match: Match) {
+    removeUpcomingMatch(match: Match, db: any) {
         //called in Match.CancelMatch()
-        const index = this.upcoming.indexOf(match,0);
-        if (index > -1) {
-            this.upcoming.slice(index,1);
+        if(this.upcoming.includes(match)) {
+            const index = this.upcoming.indexOf(match);
+            if(index > -1) {
+                this.upcoming.splice(index,1);
+            }
+            var userRef = db.ref('users');
+            userRef.child(this.username).update({
+                upcoming: JSON.stringify(this.upcoming);
+            })
+        } else {
+            console.error("No match to remove");
         }
         //Todo: push the updated list to the databse
     }
 
-    addMatch(match: Match) {
+    addMatch(match: Match, db: any) {
         //called in Match.recordResult()
         const index = this.upcoming.indexOf(match,0);
         const finishedMatch = this.upcoming[index];
         if (index > -1) {
             this.upcoming.slice(index,1);
+            this.previous.push(match);
+            var userRef = db.ref('users');
+            userRef.child(this.username).update({
+                upcoming: JSON.stringify(this.upcoming),
+                previous: JSON.stringify(this.previous)
+            });
+        } else {
+            console.error("User does not have match, or match is completed");
         }
-        this.previous.push(finishedMatch);
-        //Todo: push the updated list to the database
-
 
         //Todo: use the other players from the match, and the score of the match to calculate and update the user rating
 
