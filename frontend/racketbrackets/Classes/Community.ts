@@ -1,3 +1,4 @@
+import { DiscussionBoard } from "./DiscussionBoard";
 import { User } from "./User";
 
 export class Community{
@@ -9,7 +10,7 @@ export class Community{
     rating: number = 800;
     pendingRequests = [];
     //Todo: Implement DiscussionBoard
-    //board: DiscussionBoard
+    board: DiscussionBoard = new DiscussionBoard;
     //Todo: Add upcoming events, maybe just an array of Event items?
 
     constructor(cname: string, db: any) {
