@@ -18,7 +18,8 @@ const Profile = () => {
   const uname = u.getUsername();
   const rating = u.getRating();
   const picture = u.getPicture();
-  
+  const location = u.getLocation();
+
   return (
     <div className={styles.container}>
     <main className={styles.main}>     
@@ -34,6 +35,7 @@ const Profile = () => {
           />
           <p>Username: {name}</p>
           <p>Rating: {rating}</p>
+          <p>Location: {location}</p>
       </div>
 
       <h2>Match History</h2>

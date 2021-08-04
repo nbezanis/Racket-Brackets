@@ -6,7 +6,10 @@ import { auth } from '../config/firebaseConfig';
 import { useRouter } from 'next/dist/client/router';
 import { User } from '../Classes/User';
 
-
+/*
+*This is the sign up page. It takes input from the user and calls the CreateUser fuction, which 
+*adds the user to the database.
+*/
 const SignUp = () => {
     const user = useContext(AuthContext);
 
