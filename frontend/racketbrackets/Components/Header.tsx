@@ -22,7 +22,9 @@ const Header = () => {
     //May want to replace RacketBrackets Header with Logo?
     return (
         <div className="header">
-            <h1><span style ={{color: "forestgreen"}}>Racket</span>Brackets</h1>
+          <Link href = "/">
+            <a><h1><span style ={{color: "forestgreen"}}>Racket</span>Brackets</h1></a>
+          </Link>
             {user && 
                 <p className="userStatus">
                     <a id="signOut" onClick={SignOut}>Sign Out</a>
