@@ -10,13 +10,13 @@ const Home = () => {
       <div className = {styles.grid}>
       <a className = {styles.searchCard}>
           <form action="/Profile" method="get">
-            <input type="text" placeholder="Search for Users" id="name" name="name" />
+            <input type="text" className={styles.search} placeholder="Search for Users" id="name" name="name" />
             <button type="submit">Search</button>
           </form>
         </a> 
         <a className = {styles.searchCard}>
           <form action="/Profile" method="get">
-            <input type="text" placeholder="Search for Communities" id="query" name="query" />
+            <input type="text" className={styles.search} placeholder="Search for Communities" id="query" name="query" />
             <button type="submit">Search</button>
           </form>
         </a>    
