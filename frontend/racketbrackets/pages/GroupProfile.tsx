@@ -19,6 +19,10 @@ const GroupProfile = () => {
     const picture = c.getPicture();
     const location = c.getLocation();
 
+    const playerList = () => {
+        router.push(`/PlayerList/?name=${cname}`);
+    }
+
     return (
         <div className={styles.container}>
             <main className={styles.main}>
@@ -35,7 +39,7 @@ const GroupProfile = () => {
                     <p>Group name: {name}</p>
                     <p>Average rating: {rating}</p>
                     <p>Location: {location}</p>
-                    <button className={styles.profileButton}>See group ranking</button>
+                    <button onClick={ () => playerList()} className={styles.profileButton}>See group ranking</button>
                 </div>
 
                 <h2>Discussion Board</h2>
