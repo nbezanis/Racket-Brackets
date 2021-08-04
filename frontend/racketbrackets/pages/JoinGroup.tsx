@@ -6,6 +6,7 @@ export default class JoinGroup extends Component {
 
     groupName: string = "";
     errorMessage: string = "";
+    pendingUsers!: Array<String>;
 
     state = {
         displayError: false,
@@ -38,18 +39,22 @@ export default class JoinGroup extends Component {
         const ref = db.ref(`communities/${this.groupName}`);
         ref.on('value', (snapshot) => {
             const data = snapshot.val();
-            let pendingUsers = JSON.parse(data["pendingUsers"]);
-            const name = localStorage.getItem("username");
-            pendingUsers.push(name);
-            ref.update({"pendingUsers": pendingUsers})
-            this.errorMessage = data["pendingUsers"];
-            this.setState({displayError: true})
-        });
+            console.log(data["pendingUsers"][0])
+            if(typeof data["pendingUsers"] === "string"){
+                this.pendingUsers = JSON.parse(data["pendingUsers"])
+            }else{
+                this.pendingUsers = data["pendingUsers"];
+            }
+        }, this.requestAccess);
     };
 
     //requests the user to join the community
     requestAccess = () => {
-
+        const db = firebase.database();
+        const ref = db.ref(`communities/${this.groupName}`);
+        const name = localStorage.getItem("username");
+        this.pendingUsers.push(name || "");
+        ref.update({"pendingUsers": this.pendingUsers})
     };
 
     render() {
