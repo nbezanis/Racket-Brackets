@@ -13,6 +13,7 @@ const newGroup = () => {
 
     const groupNameRef = useRef<HTMLInputElement>(null);
 
+    //This method creates a new group
     const createGroup = () => {
         const db = firebase.database();
         const c = new Community(groupNameRef.current!.value,db);
@@ -26,6 +27,7 @@ const newGroup = () => {
         router.push(`/GroupProfile/?name=${c.getCommunityName()}`)
     }
 
+    //This is the code that makes up the page that the user sees
     return (
         <div>
             <Head>

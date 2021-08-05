@@ -28,8 +28,8 @@ class GroupData extends Component<GroupProps> {
             name: this.props.groupName,
             loading: true
         });
-        this.postNameRef = React.createRef();// = useRef<HTMLInputElement>(null);
-        this.postBodyRef = React.createRef();//useRef<HTMLInputElement>(null);
+        this.postNameRef = React.createRef();
+        this.postBodyRef = React.createRef();
     }
 
     async componentDidMount() {
@@ -59,6 +59,7 @@ class GroupData extends Component<GroupProps> {
         if(tempname) {
             name = tempname;
         }
+        //This call depends on how Group boards are stored in the db
         this.state.board.makePost(name, postNameRef.current!.value, postBodyRef.current!.value, this.props.db);
     }
 
@@ -112,30 +113,6 @@ const GroupProfile = () => {
     const params = new URLSearchParams(router.query as unknown as string);
     const name = params.get("name");
     const db = firebase.database();
-    // const c = new Community(String(name), db);
-    // const cname = c.getCommunityName();
-    // const rating = c.getRating();
-    // const picture = c.getPicture();
-    // const location = c.getLocation();
-    // const board = c.getBoard();
-    // const postNameRef = useRef<HTMLInputElement>(null);
-    // const postBodyRef = useRef<HTMLInputElement>(null);
-
-
-    //calls board.MakePost, which creates and adds a post to the board.
-    const createPost = () => {
-        var name: string = " ";
-        const tempname = localStorage.getItem("username");
-        if(tempname) {
-            name = tempname;
-        }
-        board.makePost(name, postNameRef.current!.value, postBodyRef.current!.value);
-    }
-
-    const playerList = () => {
-        router.push(`/PlayerList/?name=${cname}`);
-    }
-
 
     return (
         <div className={styles.container}>

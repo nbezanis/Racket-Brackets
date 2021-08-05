@@ -9,11 +9,18 @@ import Router from 'next/router'
 import React, { Component } from 'react'
 import { useRouter } from 'next/router'
 
+//This is the user profile page.
+
 interface ProfProps { 
 	username: string
 	db: any
 }
 
+/*
+* This class gets the user data that is to be displayed on a profile
+* It is here to ensure that the information is correctly obtained before
+* any data is displayed.
+*/
 class ProfileData extends Component<ProfProps>{
 	state = {
 		name: " ",
@@ -58,6 +65,7 @@ class ProfileData extends Component<ProfProps>{
 		return false;
 	}
 
+	//This code makes up what the user sees on a profile page
 	render() {
 		return this.state.loading ? (
 			<div>
