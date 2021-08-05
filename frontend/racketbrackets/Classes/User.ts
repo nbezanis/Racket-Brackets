@@ -146,7 +146,7 @@ export class User {
             this.upcoming.push(match);
             var userRef = db.ref('users');
             userRef.child(this.username).update({
-                upcoming: JSON.stringify(this.upcoming);
+                upcoming: JSON.stringify(this.upcoming)
             })
         }
         //Todo: push the updated list to the database
@@ -162,7 +162,7 @@ export class User {
             }
             var userRef = db.ref('users');
             userRef.child(this.username).update({
-                upcoming: JSON.stringify(this.upcoming);
+                upcoming: JSON.stringify(this.upcoming)
             })
         } else {
             console.error("No match to remove");
