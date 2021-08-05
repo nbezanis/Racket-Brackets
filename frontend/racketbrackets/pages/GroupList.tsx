@@ -11,6 +11,12 @@ interface MGProps {
     username: string
 }
 
+/*This page displays the list of groups that a user is a part of.
+* It also has two buttons that allow users to create groups or
+* search for a group to join.  
+*/
+
+//This class gets the list of groups that a user is a part of to be displayed
 class MyGroups extends Component<MGProps>{
 
     state = {
@@ -61,7 +67,7 @@ class MyGroups extends Component<MGProps>{
 }
 
 
-
+//This code makes up the page that the user sees.
 const GroupList = () => {
     const db = firebase.database();
     const router = useRouter();

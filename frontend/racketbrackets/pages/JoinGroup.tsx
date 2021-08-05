@@ -2,6 +2,11 @@ import {Component, useRef} from "react";
 import * as React from "react";
 import firebase from 'firebase';
 
+/*
+* This is the joingroup page, where users can input a group name.
+* The group is then searched for and the user is added to the pendingrequests 
+* array in the group.
+*/
 export default class JoinGroup extends Component {
 
     groupName: string = "";

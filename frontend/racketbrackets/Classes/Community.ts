@@ -1,6 +1,12 @@
 import { DiscussionBoard } from "./DiscussionBoard";
 import { User } from "./User";
 
+/*
+*This class represents a community of Users. Its main data structure is an array of users that are 
+*in the group. It also has an additional array that represents admins in the group. Other elements
+*include name, picture, and location, which are all represented as strings. Finally, there is a rating
+*element that is an integer represeting the average rating of all memebers of a group.
+*/
 export class Community{
     name: string;
     picture: string = "";
@@ -23,6 +29,10 @@ export class Community{
             });
     }
 
+    /*
+    * This function loads the various values in
+    * a community to be displayed on the profile page
+    */
     loadValues(snapshot: any, cname: string) {
         if(snapshot.hasChild(cname)) {
             this.name = cname;
@@ -42,7 +52,7 @@ export class Community{
             //Add a DiscussionBoard when its implemented
         }
     }
-
+    //Creates a new community and initializes its values
     createCommunity(creator: User, db: any) {
         this.admins.push(creator);
         creator.addCommunity(this,db);
@@ -59,6 +69,7 @@ export class Community{
         });
     }
 
+    //various getter and update functions
     getCommunityName(): string {
         return this.name;
     }

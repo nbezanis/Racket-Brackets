@@ -7,6 +7,8 @@ import styles from '../styles/grouplist.module.css'
 import image from "next/image";
 import { useRouter } from "next/router";
 
+
+// This page displays the list of users in a group
 interface GPProps {
     groupName: string
 }
@@ -28,7 +30,7 @@ class GroupPlayers extends Component<GPProps>{
     async componentDidMount() {
         await this.makeUser();
     }
-
+    //Helper function to help create the list of users and admins 
     makeUser = async() => {
         const db = firebase.database();
         var userRef = db.ref('communities').once("value")
