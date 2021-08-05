@@ -52,11 +52,8 @@ class ProfileData extends Component<ProfProps>{
         var userRef = db.ref('users').once("value")
             .then(snapshot => {
                 const user = snapshot.child(this.props.username).val();
-				console.log(typeof user);
-				console.log(user);
 				this.setState({user: user});
 				const groupArray: Array<string> = JSON.parse(user.groups);
-				console.log(groupArray);
 				if(groupArray != null && groupArray != false) {
 					this.setState({groups: []});
 					groupArray.forEach((g) => {
@@ -70,42 +67,38 @@ class ProfileData extends Component<ProfProps>{
 
 	//This code makes up what the user sees on a profile page
 	render() {
-		console.log(this.state.loading);
 		return this.state.loading ? (
 			<div>
 				<p>loading...</p>
 			</div>
 		) : (
-			<div className={styles.container}>
-				<main className={styles.main}>     
-					<div className = {styles.imgWithText}>
-						<Image
-							priority
-							src={profilePic}
-							className={styles.borderCircle}
-							height={288}
-							width={288}
-							alt={this.state.name}
-						/>
-						<p>Username: {this.state.user.username}</p>
-						<p>Rating: {this.state.user.rating}</p>
-						<p>Location: {this.state.user.location}</p>
-					</div>
+			<div>
+				<div className = {styles.imgWithText}>
+					<Image
+						priority
+						src={profilePic}
+						className={styles.borderCircle}
+						height={288}
+						width={288}
+						alt={this.state.name}
+					/>
+					<p>Username: {this.state.user.username}</p>
+					<p>Rating: {this.state.user.rating}</p>
+					<p>Location: {this.state.user.location}</p>
+				</div>
 
-					<h2>Match History</h2>
-					<ul>
-						<li>Profile 1 vs Profile 2 <u>WIN</u></li>
-						<li>Profile 1 vs Profile 3 <u>WIN</u></li>
-						<li>Profile 1 vs Profile 4 <u>LOSS</u></li>
-					</ul>
-					<h2>Active Communities</h2>
-					<ul>
-						{this.state.groups.map((g:string, index) => {
-							console.log(g);
-							return (<a href={`/GroupProfile/?name=${g}`} key={index}><li>{g}</li></a>);
-						})}
-					</ul>
-				</main>
+				<h2>Match History</h2>
+				<ul>
+					<li>Profile 1 vs Profile 2 <u>WIN</u></li>
+					<li>Profile 1 vs Profile 3 <u>WIN</u></li>
+					<li>Profile 1 vs Profile 4 <u>LOSS</u></li>
+				</ul>
+				<h2>Active Communities</h2>
+				<ul>
+					{this.state.groups.map((g:string, index) => {
+						return (<a href={`/GroupProfile/?name=${g}`} key={index}><li>{g}</li></a>);
+					})}
+				</ul>
 			</div>
 		)
 	}
@@ -126,7 +119,11 @@ const Profile = () => {
 			<Head>
 				<title>Profile: {sName}</title>
 			</Head>
-			<ProfileData username = {sName} db={db}/>
+			<div className={styles.container}>
+				<main className={styles.main}>     
+					<ProfileData username = {sName} db={db}/>	
+				</main>
+			</div>
 		</div>
 
 	);
