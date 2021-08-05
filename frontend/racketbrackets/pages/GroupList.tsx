@@ -51,8 +51,8 @@ class MyGroups extends Component<MGProps>{
             </div>
         ) : (
             <div>
-                {this.state.groups.map((g) => (
-                    <a href={`/GroupProfile/?name=${g.getCommunityName()}`}><li>{g.getCommunityName()}</li></a>
+                {this.state.groups.map((g,index) => (
+                    <a key={index} href={`/GroupProfile/?name=${g.getCommunityName()}`}><li>{g.getCommunityName()}</li></a>
                 ))}
             </div>
         )
