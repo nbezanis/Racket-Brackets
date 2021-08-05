@@ -27,11 +27,11 @@ const SignUp = () => {
       //  Make sure passwords are long enough?
     }
 
+    //Creates a new User
     const CreateUser = async () => {
       try{
         await auth.createUserWithEmailAndPassword(emailRef.current!.value,passwordRef.current!.value)
         .then(() => {
-          //console.log("user!");
           const u = new User(usernameRef.current!.value, db);
           u.createUser(emailRef.current!.value,db);
           User.TEMP_NAME = u.getUsername()
@@ -43,6 +43,7 @@ const SignUp = () => {
       }
     };
   
+    //This code makes up what the user sees.
     return (
     <div>
       <Head>

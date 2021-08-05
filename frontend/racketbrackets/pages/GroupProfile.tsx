@@ -8,8 +8,13 @@ import Router from 'next/router'
 import { useRouter } from 'next/router'
 import {DiscussionBoard} from '../Classes/DiscussionBoard';
 
+/*
+* This is the Group Profile page, that displays various information about a community
+* to a user
+*/
 const GroupProfile = () => {
 
+    //Calling the various getters for the particular community
     const router = useRouter();
     const params = new URLSearchParams(router.query as unknown as string);
     const name = params.get("name");
@@ -34,11 +39,12 @@ const GroupProfile = () => {
         board.makePost(name, postNameRef.current!.value, postBodyRef.current!.value);
     }
 
+    //used to display the list of players in a group
     const playerList = () => {
         router.push(`/PlayerList/?name=${cname}`);
     }
 
-
+    //the code that makes up the page itself.
     return (
         <div className={styles.container}>
             <main className={styles.main}>

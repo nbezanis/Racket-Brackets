@@ -6,6 +6,8 @@ import { auth } from '../config/firebaseConfig';
 import { useRouter } from 'next/dist/client/router';
 import {User} from "../Classes/User";
 
+//The page that allows existing users to log in to the app
+
 const LogIn = () => {
     const user = useContext(AuthContext);
 
@@ -14,11 +16,13 @@ const LogIn = () => {
     const emailRef = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null);
 
+    //This takes in an email and returns the piece before the '@'
     const cleanEmail = (email: String | null | undefined) => {
         if(email == null) return "user"
         return email.split("@")[0]
     }
 
+    //The sign in method that verifies the users credentials and signs them in if user exists
     const SignIn = async () => {
         try {
             const credentials = await auth.signInWithEmailAndPassword(emailRef.current!.value,passwordRef.current!.value);
@@ -30,6 +34,7 @@ const LogIn = () => {
         }
     };
 
+    //The code that makes up the page that the user sees.
     return (
         <div>
       <Head>

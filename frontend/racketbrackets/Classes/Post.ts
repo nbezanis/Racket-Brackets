@@ -1,3 +1,9 @@
+/*
+* The Post class contains various information that makes up a post
+* on a discussion board. This includes the poster, title, body of the post,
+* date, time, and any comments that the post may have
+*/
+
 export class Post{
     poster: string;
     title: string;

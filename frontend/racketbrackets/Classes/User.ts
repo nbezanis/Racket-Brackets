@@ -3,6 +3,15 @@ import { Community } from "./Community";
 import firebase from "firebase";
 import { DiscussionBoard } from "./DiscussionBoard";
 
+
+/*
+* A user object stores information that creates a depiction of a user of the site.
+* This information includes username, email, location, and picture. There are also
+* a few arrays, such as a previous array that stores the user's match history,
+* an array that stores upcoming matches, and an array that stores communities that
+* the user is a part of. Each user also has a skill rating and a discussion board
+* that other users can post to.  
+*/
 export class User {
     username: string;
     email: string = "";
@@ -29,7 +38,7 @@ export class User {
             );
         //Should query database to see if user exists, if they do, populate the rest of the fields
     }
-
+    //load the values for a user. This is used to populate fields on the profile page
     loadValues(snapshot: any, uname: string, db:any): boolean {
         var loaded: boolean = false;
         if (snapshot.hasChild(uname)) {
@@ -71,6 +80,7 @@ export class User {
         return loaded;
     }
 
+    //creates a new user object (used on sign up)
     createUser(uEmail: string, db: any) {
         //Called on the sign up page
         var userRef = db.ref('users');
