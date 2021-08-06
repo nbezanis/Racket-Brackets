@@ -32,7 +32,9 @@ class GroupData extends Component<GroupProps> {
         //loading flag allows us to wait to render page content until the data is loaded
         loading: true,
         group: new Community("abc",this.props.db),
-        board: new DiscussionBoard()
+        board: new DiscussionBoard(),
+        //Flag to indicate if there was an error loading group data
+        error: false
     }
 
     //Constructor for GroupData Component
@@ -54,20 +56,39 @@ class GroupData extends Component<GroupProps> {
         await this.makeGroup();
     }
 
+    //GroupData.componentDidUpdate()
+    //Input: prevProps - the props (input) of the previous page
+    //Updates the page content if the props or state have changed
+    async componentDidUpdate(prevProps: any) {
+        if(this.props.groupName !== prevProps.groupName) {
+            this.setState({
+                error: false
+            });
+        }
+    }
+
     //GroupData.makeGroup()
     //Asynchronous function that loads this group's data from the database
     makeGroup = async() => {
         const db = firebase.database();
         var userRef = db.ref('communities').once("value")
             .then(snapshot => {
-                //retrieve data from database
-                const group = snapshot.child(this.props.groupName).val();
-                const board = snapshot.child(this.props.groupName + "/board").val();
-                //update local state
-				this.setState({
+                //If the group exists, load the data
+                if(snapshot.hasChild(this.props.groupName)) {
+                    //retrieve data from database
+                    const group = snapshot.child(this.props.groupName).val();
+                    const board = snapshot.child(this.props.groupName + "/board").val();
+                    //update local state
+                    this.setState({
                         group: group,
                         board: board
                     });
+                } else {
+                    //If there is no entry in the database for this group, flip the error flag
+                    this.setState({
+                        error: true
+                    });
+                }
                 //flip loading flag to allow rendering
                 this.setState({loading: false});
 			});
@@ -99,6 +120,13 @@ class GroupData extends Component<GroupProps> {
     //If not done loading data, display a loading page
     //Once Data is loaded, display group proile page
     render() {
+        if(this.state.error) {
+            return(
+                <div className={styles.ErrorText}>
+                    <p> Error: Group {this.props.groupName} could not be found</p>
+                </div>
+            );
+        }
         return this.state.loading ? (
             <div>
                 <p>loading...</p>

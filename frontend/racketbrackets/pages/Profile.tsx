@@ -34,7 +34,11 @@ class ProfileData extends Component<ProfProps>{
 		//Set a loading flag to ensure page is not displayed before data is loaded
 		loading: true,
 		user: new User("abc", this.props.db),
-		groups: new Array<string>()
+		groups: new Array<string>(),
+		//Flag to indicate if this profile belongs to a different user
+		differentUser: false,
+		//Flag to indicate if there was an error loading user data
+		error: false
 	}
 
 	//Constuctor for ProfileData Component
@@ -54,6 +58,18 @@ class ProfileData extends Component<ProfProps>{
 		//If the current props are different (i.e. different username passed), reload the page data
 		if(this.props.username !== prevProps.username) {
 			await this.makeUser();
+			this.setState({
+				error: false
+			});
+			if(localStorage.getItem("username") && localStorage.getItem("username") != this.props.username) {
+				this.setState({
+					differentUser: true
+				});
+			} else {
+				this.setState({
+					differentUser: false
+				});
+			}
 		}
 	}
 
@@ -61,6 +77,12 @@ class ProfileData extends Component<ProfProps>{
 	//starts data loading once the component has mounted
 	async componentDidMount() {
 		await this.makeUser();
+		//If this user is different than you (the viewing user), set this flag for different rendering options
+		if(localStorage.getItem("username") && localStorage.getItem("username") != this.props.username) {
+			this.setState({
+				differentUser: true
+			});
+		}
 	}
 
 	//ProfileData.makeUser()
@@ -69,15 +91,23 @@ class ProfileData extends Component<ProfProps>{
 		const db = firebase.database();
         var userRef = db.ref('users').once("value")
             .then(snapshot => {
-				//Grab user data from the database
-                const user = snapshot.child(this.props.username).val();
-				this.setState({user: user});
-				//Create array of groups that the user is in to display later
-				const groupArray: Array<string> = JSON.parse(user.groups);
-				if(groupArray != null && groupArray != false) {
-					this.setState({groups: []});
-					groupArray.forEach((g) => {
-						this.state.groups.push(g);
+				//If the user exists, load their data
+				if(snapshot.hasChild(this.props.username)) {
+					//Grab user data from the database
+					const user = snapshot.child(this.props.username).val();
+					this.setState({user: user});
+					//Create array of groups that the user is in to display later
+					const groupArray: Array<string> = JSON.parse(user.groups);
+					if(groupArray != null && groupArray != false) {
+						this.setState({groups: []});
+						groupArray.forEach((g) => {
+							this.state.groups.push(g);
+						});
+					}
+				} else {
+					//If there is no entry in the database for this username, flip the error flag
+					this.setState({
+						error: true
 					});
 				}
 				//Flip loading flag to false once the data is loaded
@@ -91,6 +121,14 @@ class ProfileData extends Component<ProfProps>{
 	//Displays a loading page until loading flag indicates that data is loaded
 	//Displays player profile with dynamically loaded data once loading flag is flipped
 	render() {
+		//If the database could not load data, return an error page instead
+		if(this.state.error) {
+			return (
+				<div className={styles.ErrorText}>
+					<p>Error: User {this.props.username} could not be found</p>
+				</div>
+			);
+		}
 		return this.state.loading ? (
 			<div>
 				<p>loading...</p>
@@ -108,7 +146,8 @@ class ProfileData extends Component<ProfProps>{
 					/>
 					<p>Username: {this.state.user.username}</p>
 					<p>Rating: {this.state.user.rating}</p>
-					<p>Location: {this.state.user.location}</p>
+					{this.state.user.location ? <p>Location: {this.state.user.location}</p> : null}
+					{this.state.differentUser ? <button className={styles.profileButton}>Challenge User</button> : null}
 				</div>
 
 				<h2>Match History</h2>
