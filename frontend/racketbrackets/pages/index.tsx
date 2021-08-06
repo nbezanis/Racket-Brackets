@@ -6,7 +6,12 @@ import * as React from "react";
 *The home page has two main features, both being search bars. One allows users to search for
 *communities while the other allows users to search for other users.
 */
+
+//Also linked to from the "Search" tab on the navbar
+
 const Home = () => {
+  //Renders the two search bars on the home page
+  //The first search bar will look for users, the second for communities
   return (
     <main>
       <div className = {styles.main}>
