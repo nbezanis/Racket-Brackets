@@ -12,13 +12,20 @@ export class Post{
     time: string = "";
     comments: Array<String> = [];
 
+    //Cosntructor for the Post Class
+    //Input: pposter - username of the post author
+    //Input: ptitle - title of the post
+    //Input: pbody - body of the post 
     constructor(pposter: string, ptitle: string, pbody: string){
         this.poster = pposter;
         this.title = ptitle;
         this.body = pbody;
     }
-    addComment(){
-        
+
+    //Post.addComment()
+    //Input: comment - string of comment
+    addComment(comment: string){
+        this.comments.push(comment);
     }
 
 }

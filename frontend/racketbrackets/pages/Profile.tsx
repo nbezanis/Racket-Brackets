@@ -9,26 +9,36 @@ import Router from 'next/router'
 import React, { Component } from 'react'
 import { useRouter } from 'next/router'
 
-//This is the user profile page.
-
-interface ProfProps { 
-	username: string
-	db: any
-}
-
 /*
 * This class gets the user data that is to be displayed on a profile
 * It is here to ensure that the information is correctly obtained before
 * any data is displayed.
 */
+
+//This is the user profile page.
+
+//Linked to by the "My Profile" tab of the navbar, as results from the search/home page. or from entries on the PlayerList Page
+
+//ProfProps Interface
+//Input values for ProfileData Component
+interface ProfProps { 
+	username: string
+	db: any
+}
+
+//ProfileData Component
+//Takes ProfProps as input
 class ProfileData extends Component<ProfProps>{
 	state = {
 		name: " ",
+		//Set a loading flag to ensure page is not displayed before data is loaded
 		loading: true,
 		user: new User("abc", this.props.db),
 		groups: new Array<string>()
 	}
 
+	//Constuctor for ProfileData Component
+	//Input: props - values passed by ProfProps, a string username and a database reference
 	constructor(props: any) {
 		super(props);
 		this.setState({
@@ -37,22 +47,32 @@ class ProfileData extends Component<ProfProps>{
 		});
 	}
 
+	//ProfileData.componentDidUpdate()
+	//Input: prevProps - the props (input) of the previous page
+	//Updates page content if props have changed
 	async componentDidUpdate(prevProps: any) {
+		//If the current props are different (i.e. different username passed), reload the page data
 		if(this.props.username !== prevProps.username) {
 			await this.makeUser();
 		}
 	}
 
+	//ProfileData.componentDidMount()
+	//starts data loading once the component has mounted
 	async componentDidMount() {
 		await this.makeUser();
 	}
 
+	//ProfileData.makeUser()
+	//Asynchronously load user data to display on profile page
 	makeUser = async() => {
 		const db = firebase.database();
         var userRef = db.ref('users').once("value")
             .then(snapshot => {
+				//Grab user data from the database
                 const user = snapshot.child(this.props.username).val();
 				this.setState({user: user});
+				//Create array of groups that the user is in to display later
 				const groupArray: Array<string> = JSON.parse(user.groups);
 				if(groupArray != null && groupArray != false) {
 					this.setState({groups: []});
@@ -60,12 +80,16 @@ class ProfileData extends Component<ProfProps>{
 						this.state.groups.push(g);
 					});
 				}
+				//Flip loading flag to false once the data is loaded
 				this.setState({loading: false});
 			});
-		return false;
+		
 	}
 
+	//ProfileData.render()
 	//This code makes up what the user sees on a profile page
+	//Displays a loading page until loading flag indicates that data is loaded
+	//Displays player profile with dynamically loaded data once loading flag is flipped
 	render() {
 		return this.state.loading ? (
 			<div>
@@ -104,16 +128,20 @@ class ProfileData extends Component<ProfProps>{
 	}
 }
  
+//Profile Page
 const Profile = () => {
 	const router = useRouter();
+	//Grab username from the URL Parameters
 	const params = new URLSearchParams(router.query as unknown as string);
 	const name = params.get("name");
 	var sName: string = "";
     if(name) {
         sName = name;
     } 
+	//Create Database reference
 	const db = firebase.database();
 
+	//Render page and pass username and database ref to the ProfileData Component
 	return (
 		<div>
 			<Head>

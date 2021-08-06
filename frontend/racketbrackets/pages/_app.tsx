@@ -5,6 +5,7 @@ import Header from "../Components/Header";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return(
+    //Wraps the Component (Any page) with the Authenitcation Provider and Header
     <AuthProvider>
       <Header/>
       <Component {...pageProps} />

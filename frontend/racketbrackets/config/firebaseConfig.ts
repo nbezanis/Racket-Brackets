@@ -1,7 +1,6 @@
-// cofig/firebaseConfig.tsx
-
 import firebase from 'firebase';
 
+//Firebase API keys
 const firebaseConfig = {
     apiKey: "AIzaSyDldes9_aTzqiItbx1G-i0oowPwzKtEs4w",
     authDomain: "racket-bracket.firebaseapp.com",
@@ -13,6 +12,7 @@ const firebaseConfig = {
     measurementId: "G-ZRWHJ5Z31T"
 };
 
+//Singleton to ensure that only one instance of firebase is running at any given time
 try {
      firebase.initializeApp(firebaseConfig);
 } catch(error) {
@@ -21,4 +21,5 @@ try {
     }
 }
 
+//Authorization key used to allow user authentication to function
 export const auth = firebase.auth();

@@ -5,21 +5,27 @@ import { auth } from "../config/firebaseConfig";
 import Link from 'next/link'
 import { User } from '../Classes/User';
 
+//Header Component
+//Present on every page, displays logo, holds login/signup/signout options, creates navbar
 const Header = () => {    
+    //Establishes Authorization Context from /auth/ files
     const user = useContext(AuthContext);
     const router = useRouter();
 
+    //SignOut function
+    //Triggered by signout button
+    //clears the cached user data, kicks them back to homepage
     const SignOut = async () => {
         await auth.signOut();
         router.push('/');
         localStorage.removeItem("username");
         };
 
-    {/*<Link href="/posts/first-post">*/}
-    {/*    <a>this page!</a>*/}
-    {/*</Link>*/}
-
-    //May want to replace RacketBrackets Header with Logo?
+    //Creates JSX content of the Header
+    //Logo is always present
+    //Displays LogIn and SignUp if user is not logged in
+    //Displays SignOut if user is logged in
+    //Populates Navbar if user is logged in
     return (
         <div className="header">
           <Link href = "/">
