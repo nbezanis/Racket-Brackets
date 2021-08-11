@@ -8,7 +8,8 @@ import { User } from "../Classes/User";
 
 interface ScoreProps{
     p1:string,
-    p2:string
+    p2:string,
+    mid: string
 }
 
 class Score extends Component<ScoreProps>{
@@ -56,23 +57,31 @@ class Score extends Component<ScoreProps>{
         var p1Prob = (1.0/(1+Math.pow(((p2Rating - p1Rating)/400),10)));
         var p2Prob = (1.0/(1+Math.pow(((p1Rating - p2Rating)/400),10)));
         console.log(p1Prob + " " + p2Prob)
+        var winner: string = " ";
         if(this.p1Ref.current!.checked) {
             console.log("p1");
+            winner = this.state.user1.username;
             p1Rating += 30*(1-p1Prob);
             p2Rating += 30*(0-p2Prob);
         } else if(this.p2Ref.current!.checked){
             console.log("p2");
+            winner = this.state.user2.username
             p1Rating += 30*(0-p1Prob);
             p2Rating += 30*(1-p2Prob);
         }
         console.log("P1: " + p1Rating + " P2: " + p2Rating);
         var userRef = firebase.database().ref('users');
-            userRef.child(this.state.user1.username).update({
-                rating: p1Rating
-            });
-            userRef.child(this.state.user2.username).update({
-                rating: p2Rating
-            });
+        userRef.child(this.state.user1.username).update({
+            rating: p1Rating
+        });
+        userRef.child(this.state.user2.username).update({
+            rating: p2Rating
+        });
+        var matchRef = firebase.database().ref('matches');
+        matchRef.child(this.props.mid).update({
+            score: winner
+        });
+        window.location.reload();
     }
 
     render() {
@@ -105,7 +114,8 @@ class MatchData extends Component<MDProps>{
         details: new Match(0,firebase.database().ref("matches")),
         past: false,
         opponent: " ",
-        user: " "
+        user: " ",
+        updated: false
     }
 
     constructor(props:any) {
@@ -119,6 +129,14 @@ class MatchData extends Component<MDProps>{
     async componentDidMount() {
         await this.loadMatch();
     }
+
+    async componentDidUpdate(prevProps: any) {
+		//If the current props are different (i.e. different username passed), reload the page data
+        if(this.state.updated) {
+            await this.loadMatch();
+            this.state.updated = false;
+        }
+	}
 
     loadMatch = async() => {
         var matchRef = this.state.db.ref("/").once("value")
@@ -159,7 +177,8 @@ class MatchData extends Component<MDProps>{
                 <p><b>Match Date:</b> {this.formatDates(this.state.details.date)}</p>
                 <p><b>Match Location:</b> {this.state.details.location}</p>
                 <p><b>Opponent: </b><a href={`/Profile/?name=${this.state.opponent}`}>{this.state.opponent}</a></p>
-                {(!(this.state.details.score) && (this.state.past))? <Score p1={this.state.user} p2={this.state.opponent}/> : null}
+                {(!(this.state.details.score) && (this.state.past))? <Score p1={this.state.user} p2={this.state.opponent} mid={this.props.id}/> : null}
+                {this.state.details.score ? <p><b>Winner: </b> {this.state.details.score}</p> : null}
             </div>
         )
     }
