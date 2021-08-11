@@ -1,0 +1,14 @@
+.content {
+    margin: 1.5em
+}
+
+.content li{
+    padding: 1em;
+    width: 75%;
+    align-self: center;
+    outline: black;
+    outline-style: solid;
+    background-color: rgb(226, 226, 226);
+    list-style-type:none;
+    margin: 0.5em;
+}

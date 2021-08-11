@@ -55,12 +55,12 @@ export default class JoinGroup extends Component {
         ref.on('value', (snapshot) => {
             //Retrieves the group's list of pending users
             const data = snapshot.val();
-            console.log(data["pendingUsers"][0])
-            if(typeof data["pendingUsers"] === "string"){
-                this.pendingUsers = JSON.parse(data["pendingUsers"])
-            }else{
-                this.pendingUsers = data["pendingUsers"];
-            }
+            //console.log(data["pendingUsers"][0])
+            // if(typeof data["pendingUsers"] === "string"){
+            //     this.pendingUsers = JSON.parse(data["pendingUsers"])
+            // }else{
+            //     this.pendingUsers = data["pendingUsers"];
+            // }
         }, this.requestAccess);
     };
 
@@ -71,7 +71,7 @@ export default class JoinGroup extends Component {
         const ref = db.ref(`communities/${this.groupName}`);
         const name = localStorage.getItem("username");
         //Prevent users from submitting multiple requests
-        if(this.pendingUsers.includes(name || "")) {
+        if(false/*this.pendingUsers.includes(name || "")*/) {
             console.log("ALREADY REQUESTED TO JOIN GROUP");
             //say you already requested to join this group
         }
@@ -80,8 +80,9 @@ export default class JoinGroup extends Component {
         }*/
         //Otherwise, add user to the group's pending users
         else {
-            this.pendingUsers.push(name || "");
-            ref.update({"pendingUsers": this.pendingUsers})
+            //this.pendingUsers.push(name || "");
+            //ref.update({"pendingUsers": this.pendingUsers});
+            alert("Your request has been submitted and is pending administrator approval");
         }
         console.log(this.pendingUsers)
     };

@@ -46,24 +46,24 @@ class GroupPlayers extends Component<GPProps>{
     //Helper function to asynchronosuly create the list of users and admins 
     makeUser = async() => {
         const db = firebase.database();
-        var userRef = db.ref('communities').once("value")
+        var userRef = db.ref("/").once("value")
             .then(snapshot => {
                 //Look at all admins in the group
-                const admins = JSON.parse(snapshot.child(this.props.groupName + "/admins").val());
+                const admins: Array<User> = JSON.parse(snapshot.child("/communities/" + this.props.groupName + "/admins").val());
                 if(admins != null) {
                     //Add each admin user to the player list
-                    admins.forEach((admin: any) => {
-                        const u: User = new User(admin.username, db);
-                        console.log(u.getUsername());
+                    admins.forEach((admin: User) => {
+                        const u = snapshot.child("/users/" + admin.username).val();
+                        //console.log(u.username);
                         this.state.players.push(u);
                     });
                 }
                 //Look at all users in the group
-                const users = JSON.parse(snapshot.child(this.props.groupName + "/users").val());
+                const users = JSON.parse(snapshot.child("/communities/" + this.props.groupName + "/users").val());
                 if(users != null) {
                     //Add each user to the player list
                     users.forEach((user: any) => {
-                        const u: User = new User(user.username,db);
+                        const u =snapshot.child("/users/" + user.username).val()
                         this.state.players.push(u);
                     });
                 }
@@ -84,7 +84,7 @@ class GroupPlayers extends Component<GPProps>{
         ) : (
             <div>
                 {this.state.players.map((p) => (
-                    <a href={`/Profile/?name=${p.getUsername()}`}><li>{p.getUsername()}, Rating: {p.getRating()}</li></a>
+                    <a href={`/Profile/?name=${p.username}`}><li>{p.username}, Rating: {p.rating}</li></a>
                 ))}
             </div>
         )

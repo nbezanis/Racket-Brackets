@@ -7,7 +7,7 @@ import { User } from '../Classes/User'
 import firebase from 'firebase'
 import Router from 'next/router'
 import React, { Component } from 'react'
-import { useRouter } from 'next/router'
+import router, { useRouter } from 'next/router'
 
 /*
 * This class gets the user data that is to be displayed on a profile
@@ -116,6 +116,10 @@ class ProfileData extends Component<ProfProps>{
 		
 	}
 
+	challenge() {
+		router.push(`/ChallengeUser/?name=${this.props.username}`);
+	}
+
 	//ProfileData.render()
 	//This code makes up what the user sees on a profile page
 	//Displays a loading page until loading flag indicates that data is loaded
@@ -147,7 +151,7 @@ class ProfileData extends Component<ProfProps>{
 					<p>Username: {this.state.user.username}</p>
 					<p>Rating: {this.state.user.rating}</p>
 					{this.state.user.location ? <p>Location: {this.state.user.location}</p> : null}
-					{this.state.differentUser ? <button className={styles.profileButton}>Challenge User</button> : null}
+					{this.state.differentUser ?<button onClick={() => this.challenge()} className={styles.profileButton}>Challenge User</button> : null}
 				</div>
 
 				<h2>Match History</h2>
