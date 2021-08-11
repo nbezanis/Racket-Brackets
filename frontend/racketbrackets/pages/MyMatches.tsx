@@ -24,6 +24,12 @@ class UpcomingMatches extends Component<MatchProps> {
         this.setState({loading: true});
     }
 
+    compare = (a:any, b:any) => {
+        const aDate = new Date(a.date);
+        const bDate = new Date(b.date);
+        return aDate.getTime() - bDate.getTime();
+    }
+
     async componentDidMount() {
         await this.loadMatches();
     }
@@ -34,17 +40,29 @@ class UpcomingMatches extends Component<MatchProps> {
             .then(snapshot => {
                 console.log(this.state.name);
                 const matchArr:Array<Match> = JSON.parse( snapshot.child("/users/" + this.props.username + "/upcomingMatches").val());
+                matchArr.sort((a,b) => {
+                    const aDate = new Date(a.date);
+                    const bDate = new Date(b.date);
+                    return aDate.getTime() - bDate.getTime();
+                })
                 console.log(matchArr);
                 this.setState({matches:matchArr});
-                // const userData = snapshot.child("/users/" + this.state.name).val();
-                // if(userData) {
-                //     console.log(userData);
-                //     console.log(userData.username);
-                //     this.setState({matches : JSON.parse(userData.upcomingMatches)});
-                // } 
-                //Once the data has been loaded, allow page to render
                 this.setState({loading: false});
             })
+    }
+
+    format(array: Array<any>):string {
+        var output:string = "";
+        array.forEach((e) => {
+            output += e + " ";
+        });
+        return output
+    }
+
+    formatDates(date: string):string {
+        const  d = new Date(date);
+        var out: string = d.toLocaleString(undefined,{ weekday: "long", year: 'numeric', month: 'long', day: 'numeric' }) + " " + d.toLocaleTimeString('en-US');
+        return out;
     }
 
     render() {
@@ -55,7 +73,7 @@ class UpcomingMatches extends Component<MatchProps> {
         ) : (
             <div>
                 {this.state.matches.map((m) => (
-                    <a><li>Match at {m.location} on {m.date} <br/> Players: {m.players} </li></a>
+                    <a href={`/MatchDetails/?id=${m.id}`}><li>Match at {m.location} on {this.formatDates(m.date)} <br/> Players: {this.format(m.players)} </li></a>
                 ))}
             </div>
         );
@@ -70,8 +88,7 @@ const MyMatches = () => {
     var sName: string = "";
     if(name) {
         sName = name;
-    } 
-    console.log(sName);
+    }
 
     //Passes the group name to the GroupPlayers Component
     return (
@@ -81,7 +98,6 @@ const MyMatches = () => {
             </Head>
             <ul >
                 <UpcomingMatches username = {sName}/>
-                <li>Test</li>
             </ul>
         </div>
 
