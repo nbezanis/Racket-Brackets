@@ -49,13 +49,15 @@ const Header = () => {
                 {
                     user &&
                     <p>
-                        <Link href={`Profile/?name=${localStorage.getItem("username")}`}>
-                          <a>My Profile</a>
-                        </Link>
-                        <Link href={`GroupList/?name=${localStorage.getItem("username")}`}>
+                      <Link href={`Profile/?name=${localStorage.getItem("username")}`}>
+                        <a>My Profile</a>
+                      </Link>
+                      <Link href={`GroupList/?name=${localStorage.getItem("username")}`}>
                         <a>My Clubs</a>
-                        </Link>
+                      </Link>
+                      <Link href={`MyMatches/?name=${localStorage.getItem("username")}`}>
                         <a>My Matches</a>
+                      </Link>
                       <Link href="/">
                         <a>Search</a>
                       </Link>
