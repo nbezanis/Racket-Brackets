@@ -149,7 +149,7 @@ class ProfileData extends Component<ProfProps>{
 						alt={this.state.name}
 					/>
 					<p>Username: {this.state.user.username}</p>
-					<p>Rating: {this.state.user.rating}</p>
+					<p>Rating: {this.state.user.rating.toFixed(0)}</p>
 					{this.state.user.location ? <p>Location: {this.state.user.location}</p> : null}
 					{this.state.differentUser ?<button onClick={() => this.challenge()} className={styles.profileButton}>Challenge User</button> : null}
 				</div>
