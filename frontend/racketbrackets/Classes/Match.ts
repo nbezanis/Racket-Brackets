@@ -9,6 +9,8 @@ export class Match {
     id: number = 0;
     players: Array<string> = [];
     date: Date = new Date();
+    //p1rating: number;
+    //p2rating: number;
     location: string = "";
     score: Array<number> = [];
 
@@ -204,6 +206,22 @@ export class Match {
     rejectMatch(db: any) {
         this.cancelMatch(db);
     }
+    /*
+    updateRating(){
+        var p1;
+        var p2;
+        p1 = (1.0/(1 + Math.pow(((p2rating-p1rating)/400), 10)));
+        p2 = (1.0/(1 + Math.pow(((p1rating-p2rating)/400), 10)));
 
+        //if p1 wins
+        p1rating = p1rating + 30*(1 – p1);
+        p2rating = p2rating + 30*(0 – p2);
+        //if p2 wins
+        p1rating = p1rating + 30*(0 – p1);
+        p2rating = p2rating + 30*(1 – p2);
+        //update player ratings
+
+    }
+    */
 }
 
