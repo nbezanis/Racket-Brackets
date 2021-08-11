@@ -8,7 +8,7 @@ import { User } from "./User";
 export class Match {
     id: number = 0;
     players: Array<string> = [];
-    date: Date = new Date();
+    date: string = "";
     location: string = "";
     score: Array<number> = [];
 
@@ -59,37 +59,56 @@ export class Match {
 
     //Match.createMatch()
     //Input: players - An array of players participating in the match
-    //Input: matchDate - A date object for the time and day of the match
+    //Input: matchDate - A date in ISO format for the time and day of the match
     //Input: loc - A string location of the match
     //Input: db - a reference to the firebase database containing Match data
     //Creates a new entry in the database for this new match using the provided match data
     createMatch(players: Array<User>, matchDate: Date, loc: string, db: any){
-        var matchID = newMatchRef.key;
         var playerNames: Array<string> = new Array<string>();
         players.forEach((player) => {
             playerNames.push(player.getUsername());
-        })
+        });
         //Set object fields
-        this.id = matchID;
         this.players = playerNames;
-        this.date = matchDate;
+        this.date = matchDate.toISOString();
         this.location = loc;
         this.score = [];
         //Create database entry
         var matchRef = db.ref('matches');
         var newMatchRef = matchRef.push({
-            date: matchDate,
+            date: this.date,
             players: JSON.stringify(playerNames),
-            location: loc,
+            location: this.location,
             score: false
         });
+        var matchID = newMatchRef.key;
+        this.id = matchID;
+        var matches:Array<Match> = [];
+        var userRef = db.ref("/").once("value")
+            .then(snapshot => {
+                players.forEach((user: any) => {
+                    const u =snapshot.child("/users/" + user.getUsername()).val()
+                    console.log(u.username + " " + u.rating);
+                    matches = u.upcomingMatches;
+                    if(!matches) {
+                        matches = new Array<Match>();
+                    } else {
+                        matches = JSON.parse(u.upcomingMatches);
+                    }
+                    matches.push(this);
+                    var userRef = db.ref('users');
+                    userRef.child(u.username).update({
+                        upcomingMatches: JSON.stringify(matches)
+                    })
+                });
+            })
     }
 
     //Match.setTime()
-    //Input: time - a Date object, the new time and day of the match
+    //Input: time - a Date in ISO format, the new time and day of the match
     //Input: db - a reference to the firebase database containing Match data
     //Updates the match's date field
-    setTime(time: Date, db: any) {
+    setTime(time: string, db: any) {
         //update local field
         this.date = time;
         //update database
