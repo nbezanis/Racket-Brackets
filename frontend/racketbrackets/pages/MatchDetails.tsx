@@ -54,8 +54,8 @@ class Score extends Component<ScoreProps>{
         var p1Rating = this.state.user1.rating;
         var p2Rating = this.state.user2.rating;
         console.log(p1Rating + " " + p2Rating)
-        var p1Prob = (1.0/(1+Math.pow(((p2Rating - p1Rating)/400),10)));
-        var p2Prob = (1.0/(1+Math.pow(((p1Rating - p2Rating)/400),10)));
+        var p1Prob = (1.0/(1+Math.pow(10,((p2Rating - p1Rating)/400))));
+        var p2Prob = (1.0/(1+Math.pow(10,((p1Rating - p2Rating)/400))));
         console.log(p1Prob + " " + p2Prob)
         var winner: string = " ";
         if(this.p1Ref.current!.checked) {
@@ -81,6 +81,7 @@ class Score extends Component<ScoreProps>{
         matchRef.child(this.props.mid).update({
             score: winner
         });
+        alert("message");
         window.location.reload();
     }
 
