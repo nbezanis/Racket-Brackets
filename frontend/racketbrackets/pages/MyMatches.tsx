@@ -4,6 +4,7 @@ import firebase from "firebase";
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { User } from "../Classes/User";
+import styles from "../styles/MyMatches.module.css"
 
 interface MatchProps {
     username: string
@@ -96,9 +97,11 @@ const MyMatches = () => {
             <Head>
                 <title>My Matches</title>
             </Head>
-            <ul >
-                <UpcomingMatches username = {sName}/>
-            </ul>
+            <div className={styles.content}>
+                <ul className={styles.content}>
+                    <UpcomingMatches username = {sName}/>
+                </ul>
+            </div>
         </div>
 
     );

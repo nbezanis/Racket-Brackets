@@ -3,6 +3,7 @@ import { Match } from "../Classes/Match";
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import firebase from "firebase";
+import styles from "../styles/MyMatches.module.css"
 
 interface MDProps {
     id: string
@@ -64,7 +65,7 @@ class MatchData extends Component<MDProps>{
                 <p>loading...</p>
             </div>
         ) : (
-            <div>
+            <div className={styles.content}>
                 <p><b>Match Date:</b> {this.formatDates(this.state.details.date)}</p>
                 <p><b>Match Location:</b> {this.state.details.location}</p>
                 <p><b>Opponent: </b><a href={`/Profile/?name=${this.state.opponent}`}>{this.state.opponent}</a></p>
