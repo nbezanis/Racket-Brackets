@@ -61,7 +61,7 @@ const newMatch = () => {
     return (
         <div>
             <Head>
-                <title>Create Group</title>
+                <title>Challenger User</title>
             </Head>
             <div className = {styles.main}>
             <div className = {styles.grid}>

@@ -81,7 +81,6 @@ class Score extends Component<ScoreProps>{
         matchRef.child(this.props.mid).update({
             score: winner
         });
-        alert("message");
         window.location.reload();
     }
 
