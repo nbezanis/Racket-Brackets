@@ -41,7 +41,7 @@ const LogIn = () => {
                     if(childData.email == credentials.user?.email) {
                         name = childData.username;
                         console.log(name);
-                        localStorage.setItem("username",cleanEmail(credentials.user?.email));
+                        localStorage.setItem("username", name);
                         //Redirect the user to their profile page once logged in
                         router.push(`/Profile/?name=${name}`);
                     }
