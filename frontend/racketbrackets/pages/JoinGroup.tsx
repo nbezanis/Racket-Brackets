@@ -15,7 +15,7 @@ export default class JoinGroup extends Component {
 
     groupName: string = "";
     errorMessage: string = "";
-    pendingUsers!: Array<String>;
+    pendingUsers?: Array<String>;
 
     state = {
         displayError: false,
@@ -55,6 +55,11 @@ export default class JoinGroup extends Component {
         ref.on('value', (snapshot) => {
             //Retrieves the group's list of pending users
             const data = snapshot.val();
+            if(data == null){
+                this.errorMessage = "There is no group called " + this.groupName;
+                this.setState({displayError: true});
+                return;
+            }
             console.log(data["pendingUsers"][0])
             if(typeof data["pendingUsers"] === "string"){
                 this.pendingUsers = JSON.parse(data["pendingUsers"])
@@ -67,6 +72,7 @@ export default class JoinGroup extends Component {
     //JoinGroup.requestAccess()
     //requests the user to join the community
     requestAccess = () => {
+        if(this.pendingUsers == null) return;
         const db = firebase.database();
         const ref = db.ref(`communities/${this.groupName}`);
         const name = localStorage.getItem("username");
