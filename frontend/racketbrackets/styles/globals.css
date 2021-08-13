@@ -73,3 +73,7 @@ a {
   background-color:  rgb(156, 211, 139);
   border-color:  rgb(97, 173, 73);
 }
+
+.errorMessage{
+  color: red;
+}

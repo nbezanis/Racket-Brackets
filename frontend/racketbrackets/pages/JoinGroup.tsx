@@ -26,7 +26,7 @@ export default class JoinGroup extends Component {
     getErrorDisplay = () => {
         if(this.state.displayError){
             return(
-                <p>{this.errorMessage}</p>
+                <p className="errorMessage">{this.errorMessage}</p>
             );
         }else{
             return(
