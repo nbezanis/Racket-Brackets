@@ -1,7 +1,7 @@
 import React, { useContext, useRef, Component } from 'react';
 import styles from "../styles/profile.module.css";
 import Image from 'next/image'
-import profilePic from './images/default.png'
+import profilePic from './images/default_group.png'
 import firebase from 'firebase'
 import { Community } from '../Classes/Community';
 import Router from 'next/router'
@@ -134,14 +134,14 @@ class GroupData extends Component<GroupProps> {
         ) : (
             <div>
                 <div className = {styles.imgWithText}>
-                    {/*<Image*/}
-                    {/*  priority*/}
-                    {/*  src={profilePic}*/}
-                    {/*  className={styles.borderCircle}*/}
-                    {/*  height={288}*/}
-                    {/*  width={288}*/}
-                    {/*  alt={name}*/}
-                    {/*/>*/}
+                    <Image
+						priority
+						src={profilePic}
+						className={styles.borderCircle}
+						height={288}
+						width={288}
+						alt={this.state.name}
+					/>
                     <p>Group name: {this.state.group.name}</p>
                     <p>Average rating: {this.state.group.rating}</p>
                     <p>Location: {this.state.group.location}</p>
@@ -156,7 +156,7 @@ class GroupData extends Component<GroupProps> {
                 <input type="text" name="title" placeholder = "Post title" ref={this.postNameRef}/>
                 <input type="text" name="body" placeholder = "Post body" ref={this.postBodyRef}/>
                 <button type="button" onClick={() => this.createPost()}>Create Post</button>
-                    </form>
+                </form>
                 <h2>Upcoming Events</h2>
                 <ul>
                     <li><u>Tennis tournament, Wednesday, July 17th</u></li>
