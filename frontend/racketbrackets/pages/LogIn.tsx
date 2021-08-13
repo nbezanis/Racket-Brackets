@@ -23,8 +23,24 @@ const LogIn = () => {
         try {
             const credentials = await auth.signInWithEmailAndPassword(emailRef.current!.value,passwordRef.current!.value);
             User.TEMP_NAME = cleanEmail(credentials.user?.email)
-            localStorage.setItem("username",cleanEmail(credentials.user?.email));
-            router.push(`/Profile/?name=${cleanEmail(credentials.user?.email)}`);
+            var query = firebase.database().ref("users");
+            var name = "aaa";
+            query.once("value").then(function(snapshot) {
+                snapshot.forEach(function(childSnapshot) {
+                    var childData = childSnapshot.val();
+                    if(childData.email == credentials.user?.email) {
+                        name = childData.username;
+                        console.log(name);
+                        localStorage.setItem("username",cleanEmail(credentials.user?.email));
+                        router.push(`/Profile/?name=${name}`);
+                    }
+
+                    /*var key = childSnapshot.key;
+                    var childData = childSnapshot.val();
+                    console.log(childData.email);*/
+                });
+            });
+            
         } catch (e) {
             console.error(e);
         }
