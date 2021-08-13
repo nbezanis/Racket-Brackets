@@ -24,7 +24,7 @@ const Home = () => {
         </a> 
         <a className = {styles.searchCard}>
           <form action="/GroupProfile" method="get">
-            <input type="text" className={styles.search} placeholder="Search for Communities" id="query" name="query" />
+            <input type="text" className={styles.search} placeholder="Search for Communities" id="name" name="name" />
             <button type="submit">Search</button>
           </form>
         </a>    

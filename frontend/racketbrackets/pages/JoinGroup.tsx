@@ -78,7 +78,7 @@ export default class JoinGroup extends Component {
         const name = localStorage.getItem("username");
         //Prevent users from submitting multiple requests
         if(this.pendingUsers.includes(name || "")) {
-            console.log("ALREADY REQUESTED TO JOIN GROUP");
+            alert("You already requested to join this group");
             //say you already requested to join this group
         }
         /*else if (is an admin or user) {
