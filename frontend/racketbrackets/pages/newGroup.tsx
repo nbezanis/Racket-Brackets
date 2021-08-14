@@ -25,7 +25,8 @@ const newGroup = () => {
     const createGroup = () => {
         const db = firebase.database();
         //Create new community with input community name
-        const c = new Community(groupNameRef.current!.value,db);
+        const commName = groupNameRef.current!.value
+        const c = new Community(commName,db);
         var s: string = " ";
         //Create user object from username to create founding user
         const name = localStorage.getItem("username");
@@ -35,6 +36,18 @@ const newGroup = () => {
         const u = new User(s,db);
         //Create new database entry for this group with provided data
         c.createCommunity(u,groupLocRef.current!.value,db);
+        var userRef = db.ref('users');
+        userRef.once("value")
+            .then(snapshot => {
+                if(snapshot.hasChild(s)) {
+                    const user = snapshot.child(s).val();
+                    var comms: Array<string> = JSON.parse(user.groups);
+                    comms.push(commName);
+                    userRef.child(s).update({
+                        groups: JSON.stringify(comms)
+                    });
+                }
+            });
         //Redirect user to new Group's profile page
         router.push(`/GroupProfile/?name=${c.getCommunityName()}`)
     }

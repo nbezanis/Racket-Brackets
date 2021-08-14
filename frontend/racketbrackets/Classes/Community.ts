@@ -72,7 +72,7 @@ export class Community{
     createCommunity(creator: User, location: string, db: any) {
         this.admins.push(creator);
         this.location = location;
-        creator.addCommunity(this,db);
+        //creator.addCommunity(this,db);
         this.updateRating(db);
         var commRef = db.ref('communities');
         //Set the database values for the group's fields
@@ -185,6 +185,7 @@ export class Community{
             sum += item.getRating();
         });
         this.rating = sum / count;
+        console.log(this.rating);
         //update database value
         var commRef = db.ref('communities');
         commRef.child(this.name).update({
