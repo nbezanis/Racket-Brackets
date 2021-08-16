@@ -52,7 +52,7 @@ export default class JoinGroup extends Component {
         const db = firebase.database();
         //looks for a database entry matching the input group name
         const ref = db.ref(`communities/${this.groupName}`);
-        ref.on('value', (snapshot) => {
+        await ref.once('value', (snapshot) => {
             //Retrieves the group's list of pending users
             const data = snapshot.val();
             if(data == null){
@@ -60,13 +60,12 @@ export default class JoinGroup extends Component {
                 this.setState({displayError: true});
                 return;
             }
-            console.log(data["pendingUsers"][0])
             if(typeof data["pendingUsers"] === "string"){
                 this.pendingUsers = JSON.parse(data["pendingUsers"])
             }else{
                 this.pendingUsers = data["pendingUsers"];
             }
-        }, this.requestAccess);
+        });
     };
 
     //JoinGroup.requestAccess()
@@ -77,20 +76,25 @@ export default class JoinGroup extends Component {
         const ref = db.ref(`communities/${this.groupName}`);
         const name = localStorage.getItem("username");
         //Prevent users from submitting multiple requests
-        if(this.pendingUsers.includes(name || "")) {
-            alert("You already requested to join this group");
-            //say you already requested to join this group
+
+        if(name != null){
+            if(this.pendingUsers.includes(name)) {
+                alert("You already requested to join this group");
+                //say you already requested to join this group
+            }
+            /*else if (is an admin or user) {
+                //say already a user of this group, dont need to request
+            }*/
+            else {
+                this.pendingUsers.push(name);
+                ref.update({"pendingUsers": this.pendingUsers});
+                alert("Your request has been submitted and is pending administrator approval");
+            }
+        }else{
+            this.errorMessage = "An error has occurred";
+            this.setState({displayError: true});
         }
-        /*else if (is an admin or user) {
-            //say already a user of this group, dont need to request
-        }*/
         //Otherwise, add user to the group's pending users
-        else {
-            //this.pendingUsers.push(name || "");
-            ref.update({"pendingUsers": this.pendingUsers});
-            alert("Your request has been submitted and is pending administrator approval");
-        }
-        console.log(this.pendingUsers)
     };
 
     //JoinGroup.render()
