@@ -15,6 +15,7 @@ class UpcomingMatches extends Component<MatchProps> {
     state = {
         name: " ",
         loading: true,
+        empty: false,
         matches: new Array<Match>()
     }
 
@@ -41,13 +42,18 @@ class UpcomingMatches extends Component<MatchProps> {
             .then(snapshot => {
                 console.log(this.state.name);
                 const matchArr:Array<Match> = JSON.parse( snapshot.child("/users/" + this.props.username + "/upcomingMatches").val());
-                matchArr.sort((a,b) => {
-                    const aDate = new Date(a.date);
-                    const bDate = new Date(b.date);
-                    return aDate.getTime() - bDate.getTime();
-                })
-                console.log(matchArr);
-                this.setState({matches:matchArr});
+                if(matchArr != false) {
+                    matchArr.sort((a,b) => {
+                        const aDate = new Date(a.date);
+                        const bDate = new Date(b.date);
+                        return aDate.getTime() - bDate.getTime();
+                    })
+                    console.log(matchArr);
+                    this.setState({matches:matchArr});
+                }
+                else {
+                    this.setState({empty: true});
+                }
                 this.setState({loading: false});
             })
     }
@@ -67,6 +73,13 @@ class UpcomingMatches extends Component<MatchProps> {
     }
 
     render() {
+        if(this.state.empty) {
+            return (
+                <div>
+                    <p>You do not have any upcoming matches. Try searching for another player and challenge them from their profile.</p>
+                </div>
+            );
+        }
         return this.state.loading ? (
             <div>
                 <p>loading...</p>

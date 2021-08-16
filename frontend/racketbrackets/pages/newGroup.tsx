@@ -42,6 +42,10 @@ const newGroup = () => {
                 if(snapshot.hasChild(s)) {
                     const user = snapshot.child(s).val();
                     var comms: Array<string> = JSON.parse(user.groups);
+                    if(comms == false) {
+                        console.log("blank user");
+                        comms = [];
+                    }
                     comms.push(commName);
                     userRef.child(s).update({
                         groups: JSON.stringify(comms)
