@@ -84,7 +84,7 @@ class GroupPlayers extends Component<GPProps>{
         ) : (
             <div>
                 {this.state.players.map((p) => (
-                    <a href={`/Profile/?name=${p.username}`}><li>{p.username}, Rating: {p.rating}</li></a>
+                    <a href={`/Profile/?name=${p.username}`}><li>{p.username}, Rating: {p.rating.toFixed(0)}</li></a>
                 ))}
             </div>
         )
