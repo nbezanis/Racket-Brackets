@@ -85,7 +85,7 @@ export class Match {
         this.id = matchID;
         var matches:Array<Match> = [];
         var userRef = db.ref("/").once("value")
-            .then(snapshot => {
+            .then((snapshot: any) => {
                 players.forEach((user: any) => {
                     const u =snapshot.child("/users/" + user.getUsername()).val()
                     console.log(u.username + " " + u.rating);

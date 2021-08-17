@@ -1,10 +1,9 @@
-import React, { useContext, useRef, Component } from 'react';
+import React, { Component } from 'react';
 import styles from "../styles/profile.module.css";
 import Image from 'next/image'
 import profilePic from './images/default_group.png'
 import firebase from 'firebase'
 import { Community } from '../Classes/Community';
-import Router from 'next/router'
 import { useRouter } from 'next/router'
 import {DiscussionBoard} from '../Classes/DiscussionBoard';
 
@@ -27,6 +26,10 @@ interface GroupProps {
 //takes in GroupProps as input
 //Dynamically loads the group's data from the database
 class GroupData extends Component<GroupProps> {
+
+    private postNameRef = React.createRef<HTMLInputElement>();
+    private postBodyRef = React.createRef<HTMLInputElement>();
+
     state = {
         name: " ",
         //loading flag allows us to wait to render page content until the data is loaded
@@ -46,8 +49,6 @@ class GroupData extends Component<GroupProps> {
             loading: true
         });
         //Create refs to collect data to create a DiscussionBoard Post
-        this.postNameRef = React.createRef();
-        this.postBodyRef = React.createRef();
     }
 
     //GroupData.componentDidMount()
@@ -71,7 +72,7 @@ class GroupData extends Component<GroupProps> {
     //Asynchronous function that loads this group's data from the database
     makeGroup = async() => {
         const db = firebase.database();
-        var userRef = db.ref('communities').once("value")
+        const userRef = db.ref('communities').once("value")
             .then(snapshot => {
                 //If the group exists, load the data
                 if(snapshot.hasChild(this.props.groupName)) {
@@ -101,13 +102,13 @@ class GroupData extends Component<GroupProps> {
     //GroupData.createPost()
     //Uses data input in two input fields to create a new post on the group's DiscussionBoard
     createPost(){
-        var name: string = " ";
+        let name = " ";
         const tempname = localStorage.getItem("username");
         if(tempname) {
             name = tempname;
         }
         //This call depends on how Group boards are stored in the db
-        this.state.board.makePost(name, postNameRef.current!.value, postBodyRef.current!.value, this.props.db);
+        this.state.board.makePost(name, this.postNameRef.current!.value, this.postBodyRef.current!.value);
     }
 
     //GroupData.playerList()
@@ -173,7 +174,7 @@ const GroupProfile = () => {
     const router = useRouter();
     const params = new URLSearchParams(router.query as unknown as string);
     const name = params.get("name");
-    var sName: string = " ";
+    let sName = " ";
     if(name) {
         sName = name;
     }

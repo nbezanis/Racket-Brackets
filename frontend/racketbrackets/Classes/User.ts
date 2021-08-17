@@ -82,7 +82,7 @@ export class User {
                 this.communities = [];
             } else {
                 const comms:Array<string> = JSON.parse(snapshot.child(uname + "/groups").val());
-                if(comms != null && comms != false) {
+                if(comms != null && comms) {
                     this.communities = comms;
                 }
             }

@@ -1,11 +1,11 @@
 import Head from 'next/head'
-import { Community } from '../Classes/Community';
 import firebase from 'firebase';
 import { useRef } from 'react';
 import { User } from '../Classes/User';
 import router from 'next/router';
 import styles from '../styles/Home.module.css'
 import { Match } from '../Classes/Match';
+import { ReactElement } from 'react';
 /*
 *This page takes input from the user to create a new match and challenge another
 * player to a game of tennis
@@ -15,7 +15,7 @@ import { Match } from '../Classes/Match';
 
 //newGroup Page
 //Provides interface for creating a new Community object
-const newMatch = () => {
+const newMatch = (): ReactElement<any,any> => {
 
     //Establish refs to grab data from input fields
     const matchLocRef = useRef<HTMLInputElement>(null);
@@ -27,7 +27,7 @@ const newMatch = () => {
         const db = firebase.database();
         //Create new match to load data into
         const m = new Match(0,db);
-        var s: string = " ";
+        let s = " ";
         //Create user object from username to create first player
         const name = localStorage.getItem("username");
         if(name) {
@@ -36,18 +36,16 @@ const newMatch = () => {
         const u = new User(s,db);
         const params = new URLSearchParams(router.query as unknown as string);
         const oppName = params.get("name");
-        var sName: string = " ";
+        let sName = " ";
         if(oppName) {
             sName = oppName;
         }
         const opponent = new User(sName,db);
-        var players: Array<User> = [];
+        const players: Array<User> = [];
         players.push(u);
         players.push(opponent);
         //TODO: Validate that the input date is in the future, show error to user
         const date = new Date(matchDateRef.current!.value);
-        console.log(date.toString());
-        console.log(date.toISOString());
         const date2 = new Date(date.toISOString());
         console.log(date2);
         //Create new database entry for this match with provided data
