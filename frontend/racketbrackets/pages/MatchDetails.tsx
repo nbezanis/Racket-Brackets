@@ -1,4 +1,4 @@
-import React, { Component, useRef, useState } from "react";
+import React, { Component } from "react";
 import { Match } from "../Classes/Match";
 import { useRouter } from 'next/router';
 import Head from 'next/head';
@@ -38,7 +38,7 @@ class Score extends Component<ScoreProps>{
 
     loadUser = async() => {
         const db = firebase.database();
-        var userRef = db.ref("/users").once("value")
+        const userRef = db.ref("/users").once("value")
             .then(snapshot => {
                 const p1 = snapshot.child(this.props.p1).val();
                 const p2 = snapshot.child(this.props.p2).val();
@@ -51,33 +51,30 @@ class Score extends Component<ScoreProps>{
     }
 
     async score() {
-        var p1Rating = this.state.user1.rating;
-        var p2Rating = this.state.user2.rating;
+        let p1Rating = this.state.user1.rating;
+        let p2Rating = this.state.user2.rating;
         console.log(p1Rating + " " + p2Rating)
-        var p1Prob = (1.0/(1+Math.pow(10,((p2Rating - p1Rating)/400))));
-        var p2Prob = (1.0/(1+Math.pow(10,((p1Rating - p2Rating)/400))));
+        const p1Prob = (1.0/(1+Math.pow(10,((p2Rating - p1Rating)/400))));
+        const p2Prob = (1.0/(1+Math.pow(10,((p1Rating - p2Rating)/400))));
         console.log(p1Prob + " " + p2Prob)
-        var winner: string = " ";
+        let winner = " ";
         if(this.p1Ref.current!.checked) {
-            console.log("p1");
             winner = this.state.user1.username;
             p1Rating += 30*(1-p1Prob);
             p2Rating += 30*(0-p2Prob);
         } else if(this.p2Ref.current!.checked){
-            console.log("p2");
             winner = this.state.user2.username
             p1Rating += 30*(0-p1Prob);
             p2Rating += 30*(1-p2Prob);
         }
-        console.log("P1: " + p1Rating + " P2: " + p2Rating);
-        var userRef = firebase.database().ref('users');
+        const userRef = firebase.database().ref('users');
         userRef.child(this.state.user1.username).update({
             rating: p1Rating
         });
         userRef.child(this.state.user2.username).update({
             rating: p2Rating
         });
-        var matchRef = firebase.database().ref('matches');
+        const matchRef = firebase.database().ref('matches');
         matchRef.child(this.props.mid).update({
             score: winner
         });
@@ -139,7 +136,7 @@ class MatchData extends Component<MDProps>{
 	}
 
     loadMatch = async() => {
-        var matchRef = this.state.db.ref("/").once("value")
+        const matchRef = this.state.db.ref("/").once("value")
             .then(snapshot => {
                 const match = snapshot.child("/matches/" + this.props.id).val();
                 console.log(match);
@@ -163,7 +160,7 @@ class MatchData extends Component<MDProps>{
 
     formatDates(date: string):string {
         const  d = new Date(date);
-        var out: string = d.toLocaleString(undefined,{ weekday: "long", year: 'numeric', month: 'long', day: 'numeric' }) + " " + d.toLocaleTimeString('en-US');
+        const out: string = d.toLocaleString(undefined,{ weekday: "long", year: 'numeric', month: 'long', day: 'numeric' }) + " " + d.toLocaleTimeString('en-US');
         return out;
     }
 
@@ -189,7 +186,7 @@ const MatchDetails = () => {
     //Grabs group name from the URL Parameters
     const params = new URLSearchParams(router.query as unknown as string);
     const name  = params.get("id");
-    var sName: string = "";
+    let sName = "";
     if(name) {
         sName = name;
     } 

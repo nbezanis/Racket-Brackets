@@ -1,4 +1,4 @@
-import {Component, useRef} from "react";
+import {Component } from "react";
 import * as React from "react";
 import firebase from 'firebase';
 
@@ -13,9 +13,9 @@ import firebase from 'firebase';
 //JoinGroup Component
 export default class JoinGroup extends Component {
 
-    groupName: string = "";
-    errorMessage: string = "";
-    pendingUsers?: Array<String>;
+    groupName = "";
+    errorMessage = "";
+    pendingUsers?: Array<string>;
 
     state = {
         displayError: false,
@@ -112,4 +112,4 @@ export default class JoinGroup extends Component {
             </div>
         );
     }
-};
+}

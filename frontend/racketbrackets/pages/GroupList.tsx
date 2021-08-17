@@ -1,10 +1,8 @@
-import { User } from "../Classes/User";
-import React, { useEffect, Component, FC } from 'react'
+import React, { Component } from 'react'
 import Head from 'next/head'
 import firebase from 'firebase'
 import { Community } from "../Classes/Community";
 import styles from '../styles/grouplist.module.css'
-import image from "next/image";
 import { useRouter } from "next/router";
 
 /*This page displays the list of groups that a user is a part of.
@@ -51,10 +49,10 @@ class MyGroups extends Component<MGProps>{
     //Asyncronously retrieves a list of communities that the user is in from the database
     makeUser = async() => {
         const db = firebase.database();
-        var userRef = db.ref('users').once("value")
+        const userRef = db.ref('users').once("value")
             .then(snapshot => {
                 const comms:Array<string> = JSON.parse(snapshot.child(this.props.username + "/groups").val());
-                if(comms != null && comms != false) {
+                if(comms != null && comms) {
                     //Adds each community the user is in to the groups state of the component
                     comms.forEach((comm) => {
                         const c:Community = new Community(comm,db);
@@ -94,7 +92,7 @@ const GroupList = () => {
     const router = useRouter();
     const params = new URLSearchParams(router.query as unknown as string);
     const name  = params.get("name");
-    var sName: string = "";
+    let sName = "";
     if(name) {
         sName = name;
     } 

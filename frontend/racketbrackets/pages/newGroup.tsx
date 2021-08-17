@@ -27,7 +27,7 @@ const newGroup = () => {
         //Create new community with input community name
         const commName = groupNameRef.current!.value
         const c = new Community(commName,db);
-        var s: string = " ";
+        let s = " ";
         //Create user object from username to create founding user
         const name = localStorage.getItem("username");
         if(name) {
@@ -36,13 +36,13 @@ const newGroup = () => {
         const u = new User(s,db);
         //Create new database entry for this group with provided data
         c.createCommunity(u,groupLocRef.current!.value,db);
-        var userRef = db.ref('users');
+        const userRef = db.ref('users');
         userRef.once("value")
             .then(snapshot => {
                 if(snapshot.hasChild(s)) {
                     const user = snapshot.child(s).val();
-                    var comms: Array<string> = JSON.parse(user.groups);
-                    if(comms == false) {
+                    let comms: Array<string> = JSON.parse(user.groups);
+                    if(!comms) {
                         console.log("blank user");
                         comms = [];
                     }
