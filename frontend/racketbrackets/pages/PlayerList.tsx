@@ -1,10 +1,8 @@
 import { User } from "../Classes/User";
-import React, { useEffect, Component, FC } from 'react'
+import React, { Component } from 'react'
 import Head from 'next/head'
 import firebase from 'firebase'
-import { Community } from "../Classes/Community";
 import styles from '../styles/grouplist.module.css'
-import image from "next/image";
 import { useRouter } from "next/router";
 
 
@@ -46,7 +44,7 @@ class GroupPlayers extends Component<GPProps>{
     //Helper function to asynchronosuly create the list of users and admins 
     makeUser = async() => {
         const db = firebase.database();
-        var userRef = db.ref("/").once("value")
+        const userRef = db.ref("/").once("value")
             .then(snapshot => {
                 //Look at all admins in the group
                 const admins: Array<User> = JSON.parse(snapshot.child("/communities/" + this.props.groupName + "/admins").val());
@@ -100,7 +98,7 @@ const ListPlayers = () => {
     //Grabs group name from the URL Parameters
     const params = new URLSearchParams(router.query as unknown as string);
     const name  = params.get("name");
-    var sName: string = "";
+    let sName = "";
     if(name) {
         sName = name;
     } 

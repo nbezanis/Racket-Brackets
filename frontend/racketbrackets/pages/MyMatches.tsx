@@ -3,7 +3,6 @@ import { Match } from "../Classes/Match";
 import firebase from "firebase";
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { User } from "../Classes/User";
 import styles from "../styles/MyMatches.module.css"
 
 interface MatchProps {
@@ -38,11 +37,11 @@ class UpcomingMatches extends Component<MatchProps> {
 
     loadMatches = async() => {
         const db = firebase.database();
-        var userRef = db.ref("/").once("value")
+        const userRef = db.ref("/").once("value")
             .then(snapshot => {
                 console.log(this.state.name);
                 const matchArr:Array<Match> = JSON.parse( snapshot.child("/users/" + this.props.username + "/upcomingMatches").val());
-                if(matchArr != false) {
+                if(matchArr) {
                     matchArr.sort((a,b) => {
                         const aDate = new Date(a.date);
                         const bDate = new Date(b.date);
@@ -59,7 +58,7 @@ class UpcomingMatches extends Component<MatchProps> {
     }
 
     format(array: Array<any>):string {
-        var output:string = "";
+        let output = "";
         array.forEach((e) => {
             output += e + " ";
         });
@@ -68,7 +67,7 @@ class UpcomingMatches extends Component<MatchProps> {
 
     formatDates(date: string):string {
         const  d = new Date(date);
-        var out: string = d.toLocaleString(undefined,{ weekday: "long", year: 'numeric', month: 'long', day: 'numeric' }) + " " + d.toLocaleTimeString('en-US');
+        const out: string = d.toLocaleString(undefined,{ weekday: "long", year: 'numeric', month: 'long', day: 'numeric' }) + " " + d.toLocaleTimeString('en-US');
         return out;
     }
 
@@ -99,7 +98,7 @@ const MyMatches = () => {
     //Grabs group name from the URL Parameters
     const params = new URLSearchParams(router.query as unknown as string);
     const name  = params.get("name");
-    var sName: string = "";
+    let sName = "";
     if(name) {
         sName = name;
     }

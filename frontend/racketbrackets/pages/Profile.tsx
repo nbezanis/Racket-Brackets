@@ -1,11 +1,9 @@
 import Head from 'next/head'
 import Image from 'next/image'
-import Link from 'next/link'
 import profilePic from './images/default.png'
 import styles from '../styles/profile.module.css'
 import { User } from '../Classes/User'
 import firebase from 'firebase'
-import Router from 'next/router'
 import React, { Component } from 'react'
 import router, { useRouter } from 'next/router'
 
@@ -89,7 +87,7 @@ class ProfileData extends Component<ProfProps>{
 	//Asynchronously load user data to display on profile page
 	makeUser = async() => {
 		const db = firebase.database();
-        var userRef = db.ref('users').once("value")
+        const userRef = db.ref('users').once("value")
             .then(snapshot => {
 				//If the user exists, load their data
 				if(snapshot.hasChild(this.props.username)) {
@@ -98,7 +96,7 @@ class ProfileData extends Component<ProfProps>{
 					this.setState({user: user});
 					//Create array of groups that the user is in to display later
 					const groupArray: Array<string> = JSON.parse(user.groups);
-					if(groupArray != null && groupArray != false) {
+					if(groupArray != null && groupArray) {
 						this.setState({groups: []});
 						groupArray.forEach((g) => {
 							this.state.groups.push(g);
@@ -177,7 +175,7 @@ const Profile = () => {
 	//Grab username from the URL Parameters
 	const params = new URLSearchParams(router.query as unknown as string);
 	const name = params.get("name");
-	var sName: string = "";
+	let sName = "";
     if(name) {
         sName = name;
     } 

@@ -21,7 +21,7 @@ const LogIn = () => {
     const passwordRef = useRef<HTMLInputElement>(null);
 
     //This takes in an email and returns the piece before the '@'
-    const cleanEmail = (email: String | null | undefined) => {
+    const cleanEmail = (email: string | null | undefined) => {
         if(email == null) return "user"
         return email.split("@")[0]
     }
@@ -33,11 +33,11 @@ const LogIn = () => {
             const credentials = await auth.signInWithEmailAndPassword(emailRef.current!.value,passwordRef.current!.value);
             //store the username for easy access later
             User.TEMP_NAME = cleanEmail(credentials.user?.email)
-            var query = firebase.database().ref("users");
-            var name = "aaa";
+            const query = firebase.database().ref("users");
+            let name = "aaa";
             query.once("value").then(function(snapshot) {
                 snapshot.forEach(function(childSnapshot) {
-                    var childData = childSnapshot.val();
+                    const childData = childSnapshot.val();
                     if(childData.email == credentials.user?.email) {
                         name = childData.username;
                         console.log(name);
